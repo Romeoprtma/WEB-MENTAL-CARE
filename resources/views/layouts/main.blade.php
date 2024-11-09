@@ -12,7 +12,9 @@
     @include('partials.navbar')
     <div>
         @yield('home')
+        @yield('meditasi')
     </div>
     @include('partials.footer')
+    <script src="main.js"></script>
 </body>
 </html>

@@ -9,3 +9,7 @@ Route::get('/', function () {
 Route::get('/admin', function () {
     return view('components.homeAdmin');
 });
+
+Route::get('/meditasi', function () {
+    return view('components.meditasi');
+});
