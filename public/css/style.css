@@ -1,0 +1,16 @@
+.music-player {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.play-btn {
+    cursor: pointer;
+}
+
+.music-player .flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}

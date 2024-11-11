@@ -13,3 +13,7 @@ Route::get('/admin', function () {
 Route::get('/meditasi', function () {
     return view('components.meditasi');
 });
+
+Route::get('/tesKepribadian', function () {
+    return view('components.tesKepribadian');
+});
