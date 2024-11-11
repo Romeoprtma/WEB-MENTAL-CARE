@@ -1,5 +1,6 @@
+main
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,10 +14,7 @@
     @include('partials.navbar')
     <div>
         @yield('home')
-        @yield('meditasi')
-        @yield('tesKepribadian')
     </div>
     @include('partials.footer')
-    <script src="main.js"></script>
 </body>
 </html>
