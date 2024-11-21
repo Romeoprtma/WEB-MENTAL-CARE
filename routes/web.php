@@ -17,3 +17,9 @@ Route::get('/meditasi', function () {
 Route::get('/tesKepribadian', function () {
     return view('components.tesKepribadian');
 });
+Route::get('/psikolog', function(){
+    return view('components.listPsikolog');
+});
+Route::get('/psikolog/chat', function(){
+    return view('components.chat');
+});
