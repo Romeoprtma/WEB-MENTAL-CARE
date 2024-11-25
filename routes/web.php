@@ -23,3 +23,9 @@ Route::get('/psikolog', function(){
 Route::get('/psikolog/chat', function(){
     return view('components.chat');
 });
+Route::get('/login', function(){
+    return view('components.login');
+});
+Route::get('/forgetPassword', function(){
+    return view('components.resetPassword');
+});
