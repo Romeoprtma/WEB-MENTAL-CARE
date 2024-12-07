@@ -13,6 +13,7 @@
     @include('partials.sidebar')
     <div>
         @yield('homeAdmin')
+        @yield('dashboardAdmin')
     </div>
     @include('partials.footer')
 </body>

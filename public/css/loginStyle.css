@@ -227,6 +227,21 @@ body {
     color: #333;
 }
 
+/* Styling for error messages */
+.error-message {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    color: #dc2626;
+    text-align: start;
+    display: none;
+}
+
+.password-container .error-message {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 0.25rem;
+}
 
 /* Dark mode */
 @media (prefers-color-scheme: dark) {
@@ -259,7 +274,7 @@ body {
         border-color: #fff;
         color: #fff;
     }
-    
+
     .toggle {
         background: rgb(17 24 39);
     }

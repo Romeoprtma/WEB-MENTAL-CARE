@@ -9,13 +9,13 @@
     </div>
     <!-- Image Section -->
     <div class="img-hero flex justify-center lg:justify-end w-full lg:w-auto">
-        <img src="img/icon_hero.svg" class="w-64 h-64 md:w-80 md:h-80 lg:w-[481px] lg:h-[469px]" alt="Icon Hero">
+        <img src="{{asset('/img/icon_hero.svg')}}" class="w-64 h-64 md:w-80 md:h-80 lg:w-[481px] lg:h-[469px]" alt="Icon Hero">
     </div>
 </section>
 {{-- About --}}
 <section id="about" class="flex flex-col bg-white lg:flex-row justify-center items-center px-4 md:px-10 lg:px-20 min-h-screen dark:bg-gray-900 w-full">
     <div class="mt-6 lg:mt-0 w-full lg:w-1/2 flex justify-center lg:justify-end pr-40">
-        <img src="img/icon_about.png" class="w-48 h-48 md:w-64 md:h-64 lg:w-[481px] lg:h-[469px]" alt="Icon About">
+        <img src="{{asset('/img/icon_about.png')}}" class="w-48 h-48 md:w-64 md:h-64 lg:w-[481px] lg:h-[469px]" alt="Icon About">
     </div>
     <div class="mt-10 lg:mt-0 lg:ml-10 w-full lg:w-1/2 text-center lg:text-left px-4 lg:px-0">
         <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 dark:text-white">Tentang Kami</h1>
@@ -24,11 +24,11 @@
         </p>
         <div class="flex flex-col sm:flex-row justify-center lg:justify-start items-center gap-4 mt-6 text-gray-700 dark:text-gray-300">
             <div class="flex items-center space-x-2">
-                <img src="img/instagram.png" alt="Instagram" class="w-6 h-6">
+                <img src="{{asset('/img/instagram.png')}}" alt="Instagram" class="w-6 h-6">
                 <h2>Instagram</h2>
             </div>
             <div class="flex items-center space-x-2">
-                <img src="img/wa.png" alt="WhatsApp" class="w-6 h-6">
+                <img src="{{asset('/img/wa.png')}}" alt="WhatsApp" class="w-6 h-6">
                 <h2>WhatsApp</h2>
             </div>
         </div>

@@ -15,3 +15,8 @@
     width: 100%;
 }
 
+.swal2-confirm.btn-confirm {
+    background-color: #4CAF50; /* Hijau */
+    color: white; /* Teks putih */
+    border: none;
+}
