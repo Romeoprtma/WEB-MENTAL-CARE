@@ -1,4 +1,3 @@
-main
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
@@ -14,8 +13,6 @@ main
     @include('partials.navbar')
     <div>
         @yield('home')
-        @yield('meditasi')
-        @yield('tesKepribadian')
     </div>
     @include('partials.footer')
 </body>
