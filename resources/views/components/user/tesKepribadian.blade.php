@@ -10,7 +10,7 @@
                 diri dan hubungan sosial.</h3>
         </div>
         <div class="img-hero mr-[80px] mt-10">
-            <img src="img/tesKepribadian.png" width="350px" height="350px" alt="">
+            <img src="{{asset('/img/tesKepribadian.png')}}" width="350px" height="350px" alt="">
         </div>
     </section>
 @endsection

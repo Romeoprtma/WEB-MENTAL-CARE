@@ -10,7 +10,7 @@
                 tenang dan seimbang dengan musik yang membimbing Anda menuju kedamaian.</h3>
         </div>
         <div class="img-hero mr-[80px] mt-10">
-            <img src="img/heroMeditasi.png" width="350px" height="350px" alt="">
+            <img src="{{asset('/img/heroMeditasi.png')}}" width="350px" height="350px" alt="">
         </div>
     </section>
 
