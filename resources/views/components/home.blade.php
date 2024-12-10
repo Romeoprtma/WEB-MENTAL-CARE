@@ -3,13 +3,13 @@
 {{-- Home --}}
 <section class="flex flex-col lg:flex-row justify-between items-center bg-[#756AB6] px-4 lg:px-20 h-auto lg:h-[668px] py-10 lg:py-0">
     <!-- Text Section -->
-    <div class="title-hero text-center lg:text-left text-[#D4BEE4] font-bold mb-6 lg:mb-0 lg:ml-20">
-        <h1 class="text-2xl md:text-3xl lg:text-4xl">MentalCare</h1>
-        <h3 class="text-lg md:text-xl lg:text-2xl mt-2">Dukungan Kesehatan Mental yang Terjangkau untuk Semua</h3>
+    <div class="title-hero text-center lg:text-left text-white mb-6 lg:mb-0 lg:ml-20">
+        <h1 class="text-[42px] font-bold">MentalCare</h1>
+        <h3 class="py-2 max-w-[500px] mr-[54px]">Temukan solusi kesehatan mental terintegrasi di satu platform. Nikmati meditasi dengan musik menenangkan, tes kepribadian, video edukasi, hingga konsultasi langsung dengan ahli. Bersama kami, jadikan kesejahteraan mentalmu prioritas utama.</h3>
     </div>
     <!-- Image Section -->
     <div class="img-hero flex justify-center lg:justify-end w-full lg:w-auto">
-        <img src="img/icon_hero.svg" class="w-64 h-64 md:w-80 md:h-80 lg:w-[481px] lg:h-[469px]" alt="Icon Hero">
+        <img src="img/icon_hero.svg" class="w-64 h-64 md:w-80 md:h-80 lg:w-[450px] lg:h-[450px]" alt="Icon Hero">
     </div>
 </section>
 {{-- About --}}
