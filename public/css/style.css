@@ -15,6 +15,12 @@
     width: 100%;
 }
 
+#myChart {
+    width: 100%; /* Pastikan canvas mengisi lebar */
+    height: 400px; /* Sesuaikan tinggi canvas */
+}
+
+
 /* HTML: <div class="loader"></div> */
 .loader {
     --r1: 154%;
@@ -46,12 +52,19 @@
     z-index: 999;
   }
 
-  .loader.hidden {
-    display: none;
-}
-
   @keyframes l9 {
       33%  {background-position:    0% 33% ,100% 33% ,200% 33% }
       66%  {background-position: -100%  66%,0%   66% ,100% 66% }
       100% {background-position:    0% 100%,100% 100%,200% 100%}
   }
+
+.swal2-confirm.btn-confirm {
+    background-color: #4CAF50; /* Hijau */
+    color: white; /* Teks putih */
+    border: none;
+}
+
+.h1 {
+    background-color: #4CAF50;
+    color: rebeccapurple;
+}

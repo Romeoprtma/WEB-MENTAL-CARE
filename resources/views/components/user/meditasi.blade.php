@@ -9,8 +9,8 @@
                 meningkatkan fokus, dan memperdalam relaksasi. Mulai perjalanan mental yang lebih
                 tenang dan seimbang dengan musik yang membimbing Anda menuju kedamaian.</h3>
         </div>
-        <div class="img-hero flex justify-center lg:justify-end w-full lg:w-auto">
-            <img src="img/heroMeditasi.png" width="400px" height="400px" alt="">
+        <div class="img-hero mr-[80px] mt-10">
+            <img src="{{asset('/img/heroMeditasi.png')}}" width="350px" height="350px" alt="">
         </div>
     </section>
 

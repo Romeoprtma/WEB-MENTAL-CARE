@@ -65,7 +65,7 @@ class MBTIController extends Controller
     }
 
     // Kirimkan data ke view
-    return view('components.tesKepribadian', compact(
+    return view('components.user.tesKepribadian', compact(
         'optionA1', 'optionB1', 'optionA2', 'optionB2',
         'optionA3', 'optionB3', 'optionA4', 'optionB4',
         'choice1', 'choice2', 'choice3', 'choice4',

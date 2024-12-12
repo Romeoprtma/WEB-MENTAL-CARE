@@ -10,7 +10,7 @@
                 diri dan hubungan sosial.</h3>
         </div>
         <div class="img-hero flex justify-center lg:justify-end w-full lg:w-auto">
-            <img src="img/tesKepribadian.png" width="450px" height="450px" alt="">
+            <img src="{{asset('/img/tesKepribadian.png')}}" width="350px" height="350px" alt="">
         </div>
     </section>
 
@@ -29,7 +29,6 @@
 <div id="loadingScreen">
     <div class="loader"></div>
 </div>
-
 {{-- END SOAL TES --}}
 
 
@@ -227,12 +226,17 @@
 
     // Tampilkan loader
     function showLoader() {
-        document.getElementById('loadingScreen').style.display = 'flex';
-    }
+    const loadingScreen = document.getElementById("loadingScreen");
+    loadingScreen.style.visibility = "visible"; // Mengubah visibility menjadi terlihat
+    loadingScreen.style.display = "flex"; // Pastikan loader ditampilkan (gunakan flex agar loader berada di tengah)
+}
 
-    // Sembunyikan loader
-    function hideLoader() {
-        document.getElementById('loadingScreen').style.display = 'none';
-    }
+
+function hideLoader() {
+    const loadingScreen = document.getElementById("loadingScreen");
+    loadingScreen.style.visibility = "hidden";
+    loadingScreen.style.display = "none";
+}
+
 </script>
 @endsection
