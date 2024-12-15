@@ -19,5 +19,7 @@
         @yield('chat')
     </div>
     @include('partials.footer')
+
+    <script src="main.js"></script>
 </body>
 </html>

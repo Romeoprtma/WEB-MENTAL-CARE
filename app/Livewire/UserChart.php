@@ -9,30 +9,31 @@ use Livewire\Component;
 class UserChart extends Component
 {
     public $userChartData;
+    protected $listeners = ['ubahData' => 'changeData'];
+    public function mount(){
+        $userData = User::latest()->limit(5)->get();
+        foreach($userData as $item){
+            $data['label'][]= $item->created_at->format('Y-m-d');
+            $data['data'][] = (int) $item->id;
+        }
+        $this->userChartData = json_encode($data);
+        // dd($this->userChartData);
+    }
 
     public function render()
     {
-        // Ambil data pengguna yang dikelompokkan berdasarkan tanggal pendaftaran
-        $dataUser = User::selectRaw('DATE(created_at) as date, COUNT(*) as count')
-                        ->groupBy('date')
-                        ->orderBy('date', 'asc')
-                        ->get();
-
-        // Persiapkan data untuk chart
-        $data = [
-            'labels' => [],  // Tanggal pendaftaran
-            'data' => []     // Jumlah pengguna yang terdaftar pada tanggal tersebut
-        ];
-
-        // Looping data untuk membuat label dan data
-        foreach ($dataUser as $user) {
-            $data['labels'][] = Carbon::parse($user->date)->format('Y-m-d'); // Format tanggal
-            $data['data'][] = $user->count; // Jumlah pengguna pada tanggal tersebut
-        }
-
-        // Kirim data ke frontend
-        $this->userChartData = $data;
 
         return view('livewire.user-chart');
+    }
+
+    public function changeData () {
+        $userData = User::latest()->limit(5)->get();
+        foreach($userData as $item){
+            $data['label'][]= $item->created_at->format('Y-m-d');
+            $data['data'][] = (int) $item->income;
+        }
+        $this->userChartData = json_encode($data);
+        $this->emit('berhasilUpdate', ['data' => $this->userChartData]);
+        // dd($this->userChartData);
     }
 }
