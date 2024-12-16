@@ -40,9 +40,8 @@ Route::post('/auth', [loginController::class, 'handleAuth']);
 
 Route::middleware(['auth','user-access:user'])->prefix('user')->group(function(){
     Route::post('/home', [riviewController::class, 'store'])->name('reviews.store');
-
+    Route::get('/home',[viewController::class ,'viewHome'])->name('user.home');
     Route::get('/meditasi',[viewController::class, 'viewMeditasi']);
-
     Route::get('/tesKepribadian', [MBTIController::class, 'mbti'])->name('mbti');
     Route::post('/submit-answers', [MBTIController::class, 'submitAnswers'])->name('submit.answers');
 
