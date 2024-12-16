@@ -17,6 +17,7 @@
         @yield('tesKepribadian')
         @yield('listPsikolog')
         @yield('chat')
+        @yield('profile')
     </div>
     @include('partials.footer')
 
