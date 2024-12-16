@@ -3,7 +3,7 @@
 @section('kelolaPsikolog')
 <div class="p-4 sm:ml-64 flex justify-center">
     <div class="w-full max-w-6xl">
-        <div class="bg-white p-2">
+        <div class="bg-white p-4">
         <h1 class="text-2xl font-bold text-gray-800 mb-6 text-start">EDIT PSIKOLOG</h1>
 
         <!-- Form Edit -->
@@ -11,7 +11,7 @@
             @csrf
             @method('PUT') <!-- Mengganti metode menjadi PUT -->
             <div class="mb-6">
-                <label for="name" class="block text-gray-700 font-bold mb-2">Nama</label>
+                <label for="name">Nama</label>
                 <input type="text" name="name" id="name" value="{{ old('name', $kelolaPsikolog->name) }}"
                     class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#756AB6]">
                 @error('name')

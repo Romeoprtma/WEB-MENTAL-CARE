@@ -62,9 +62,9 @@ class MeditasiController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Meditasi $meditasi)
+    public function edit(Meditasi $kelolaMeditasi)
     {
-        return view('components.admin.meditasi.editLagu', compact('meditasi'));
+        return view('components.admin.meditasi.editLagu', compact('kelolaMeditasi'));
     }
 
     /**
@@ -75,20 +75,22 @@ class MeditasiController extends Controller
         $request->validate([
             'title' => 'required',
             'duration' => 'required',
-            'audio_file' => 'mimes:mp3,wav|max:10240', // Jika ada file baru
+            'audio_file' => 'mimes:mp3,wav|max:15240', // Jika ada file baru
         ]);
 
         // Update file audio jika ada
         if ($request->hasFile('audio_file')) {
-            $audioPath = $request->file('audio_file')->store('audio_files', 'public');
-            $kelolaMeditasi->update([
-                'audio_file' => $audioPath,
-            ]);
+            if ($kelolaMeditasi->audio_file) {
+                Storage::disk('public')->delete($kelolaMeditasi->audio_file);
+            }
+            $kelolaMeditasi->image = $request->file('audio_file')->store('audio_files', 'public');
         }
+
 
         $kelolaMeditasi->update([
             'title' => $request->title,
             'duration' => $request->duration,
+            'audio_file' => $kelolaMeditasi->audio_file ?? $kelolaMeditasi->audio_file,
         ]);
 
         return redirect()->route('kelolaMeditasi.index')->with('success', 'Lagu berhasil diperbarui.');
