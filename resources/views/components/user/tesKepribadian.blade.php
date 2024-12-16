@@ -16,6 +16,8 @@
 
     {{-- SOAL TES --}}
 <section class="mt-11">
+    <h1 class="text-[32px] font-bold text-center mb-11">INSTRUKSI PENGISIAN SOAL</h1>
+    <p class="text-lg  text-[#5d519f] font-bold text-justify px-[200px]">Di bawah ini ada 60 nomor. Masing-masing nomor memiliki dua pernyataan yang bertolak belakang (PERNYATAAN A & B). Pilihlah salah satu pernyataan yang paling sesuai dengan diri Anda dengan mengetik angka "1" pada kolom yang sudah disediakan (KOLOM ISIAN). Anda HARUS memilih salah satu yang dominan serta mengisi semua nomor. Lebih jelasnya lihat Contoh di Sheet 2.</p>
     <form id="dataForm" class="text-center">
         <div id="questionContainer" class="mb-5">
             <!-- Input fields will be dynamically generated here -->
@@ -117,8 +119,10 @@
 
     <div class="flex justify-center items-center">
 
-    <a href="{{ url('printTes') }}" class="btn btn-primary cursor-pointer" >
-        Download Hasil Tes
+    <a href="{{ url('printTes') }}" class=" cursor-pointer" >
+        <button type="submit" class="bg-[#756AB6] mt-8 text-white px-6 py-3 rounded-lg hover:bg-[#5d519f]">
+            Download Hasil Test
+        </button>
     </a>
 </div>
 </section>

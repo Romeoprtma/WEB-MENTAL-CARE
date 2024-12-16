@@ -32,18 +32,10 @@ class profileController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            // Hapus gambar lama jika ada
             if ($users->image) {
-                Storage::disk('public')->delete($users->image); // Menghapus gambar lama di 'public' disk
+                Storage::disk('public')->delete($users->image);
             }
-
-            // Simpan gambar baru
-            $imageFile = $request->file('image');
-            $imageName = time() . '_' . $imageFile->getClientOriginalName();
-            $imageFile = $imageFile->storeAs('images', $imageName);
-
-            // Simpan path gambar ke database
-            $users->image = $imageFile;
+            $users->image = $request->file('image')->store('images/psikolog', 'public');
         }
 
         $users->update([
@@ -51,8 +43,10 @@ class profileController extends Controller
             'email'=>$request->email,
             'phone'=>$request->phone,
             'address'=>$request->address,
-            'image'=>$imageName
+            'image'=>$users->image ?? $users->image,
         ]);
+
+
 
         return redirect(Auth::user()->role.'/profile');
     }

@@ -58,7 +58,6 @@
     <table>
         <thead>
             <tr>
-                <th rowspan="2">No</th>
                 <th rowspan="2">Nama</th>
                 <th colspan="8">Hasil Tes</th>
             </tr>
@@ -75,8 +74,7 @@
         </thead>
         <tbody>
             <tr>
-                <td></td>
-                <td></td>
+                <td>{{ $users }}</td>
                 <td>{{ $optionA1 }}</td>
                 <td>{{ $optionB1 }}</td>
                 <td>{{ $optionA2 }}</td>
