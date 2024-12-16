@@ -9,31 +9,30 @@
     </div>
 
     <div class="max-w-4xl mx-auto space-y-6">
+        @foreach ($psikologs as $index => $item)
         <!-- Card 1 -->
-        <a href="#" class="block" onclick="openDetail('Dr. Romeo Sp.KJ', 'Lorem ipsum dolor sit amet consectetur', 'Romeo specializes in adolescent mental health with expertise in behavioral therapy.', 'https://via.placeholder.com/150')">
-            <div class="bg-purple-500 text-white p-4 rounded-lg shadow-md flex items-center space-x-4
-                        transition-colors duration-300 hover:bg-purple-600">
+        <a href="#" class="block" onclick="openDetail('{{ $item->name }}', 'Psikolog', '{{ $item->deskripsi }}', 'https://via.placeholder.com/150')">
+            <div class="bg-white dark:bg-gray-900 text-white p-4 rounded-lg shadow-md flex items-center space-x-4
+                        transition-colors duration-300 hover:bg-gray-200 dark:hover:bg-gray-700">
                 <!-- Avatar -->
                 <img
                   class="w-16 h-16 rounded-full"
-                  src="https://via.placeholder.com/150"
+                  src="{{ Storage::url($item->image) }}"
                   alt="Doctor"
                 />
                 <!-- Content -->
                 <div class="flex-1">
                     <!-- Header -->
                     <div class="flex justify-between items-center">
-                        <h3 class="text-lg font-semibold">Dr. Romeo Sp.KJ</h3>
-                        <div class="flex items-center space-x-2">
-                            <span class="text-green-400">● Online</span>
-                        </div>
+                        <h3 class="text-lg font-semibold">{{ $item->name }}</h3>
                     </div>
                     <!-- Deskripsi -->
-                    <p class="text-sm mt-1">Lorem ipsum dolor sit amet consectetur</p>
+                    <p class="text-sm mt-1">{{ $item->deskripsi }}</p>
                     <!-- Actions -->
                     <div class="mt-3 flex items-center space-x-2">
                         <!-- Tombol Chat yang Mengarah ke Halaman Chat -->
-                        <a href="/psikolog/chat" class="bg-purple-700 hover:bg-purple-600 text-white text-xs px-3 py-1 rounded-full transition duration-300">
+                        <a href="{{url(Auth::user()->role.'/chat')}}"
+                            class="bg-white text-gray-900 dark:bg-[#756AB6] dark:text-white hover:bg-gray-200 dark:hover:bg-[#5b4a9e] text-xs px-3 py-1 rounded-full transition duration-300">
                             Chat dengan Psikolog
                         </a>
                         <!-- Rating -->
@@ -49,7 +48,7 @@
                 </div>
             </div>
         </a>
-        <!-- Duplikasi Card Lain -->
+        @endforeach
     </div>
 </section>
 <div id="loadingScreen">
@@ -81,7 +80,7 @@
         <!-- Action Button -->
         <div class="mt-6 text-center">
             <button
-                class="bg-purple-500 text-white px-4 py-2 rounded-lg hover:bg-purple-600 transition">
+                class="bg-white text-gray-900 dark:bg-[#756AB6] dark:text-white hover:bg-gray-200 dark:hover:bg-[#5b4a9e] text-xs px-3 py-1 rounded-full transition duration-300">
                 Hubungi Sekarang
             </button>
         </div>

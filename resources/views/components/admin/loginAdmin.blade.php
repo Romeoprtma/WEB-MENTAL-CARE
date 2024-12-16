@@ -43,10 +43,6 @@
             Login
         </button>
         </form>
-        <p class="mt-4 text-sm text-center text-gray-600">
-            Belum memiliki akun?
-            <a href="/registerAdmin" class="text-blue-600 hover:underline">Daftar Akun</a>
-        </p>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>

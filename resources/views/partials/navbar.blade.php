@@ -1,11 +1,3 @@
-    <!-- Loading Screen -->
-    <div id="loading-screen" class="fixed inset-0 z-50 bg-white flex items-center justify-center hidden">
-        <div class="flex flex-col items-center">
-            <div class="w-16 h-16 border-4 border-blue-500 border-dashed rounded-full animate-spin"></div>
-            <p class="mt-4 text-lg font-semibold text-gray-600">Memuat halaman...</p>
-        </div>
-    </div>
-
 <nav class="bg-white border-gray-200 shadow-lg dark:bg-gray-900">
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         @auth
@@ -39,7 +31,7 @@
                           <button
                             type="button" class="inline-flex py-2 px-2 text-white hover:text-gray-700  justify-center rounded-full shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" id="menu-button" aria-expanded="true" aria-haspopup="true">
                             <svg
-                              xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-6 h-6 fill-current" aria-hidden="true">
+                              xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-6 h-6 dark:fill-current" aria-hidden="true">
                               <path
                                 d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464l349.5 0c-8.9-63.3-63.3-112-129-112l-91.4 0c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304l91.4 0C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7L29.7 512C13.3 512 0 498.7 0 482.3z"
                               />
@@ -52,6 +44,11 @@
                                 Profile Saya
                             </a>
                           </div>
+                          @if(session('logout'))
+                                <div class="bg-blue-500 text-white p-4 rounded-lg mb-6 text-center">
+                                    {{ session('logout') }}
+                                </div>
+                            @endif
                           <div class="py-1" role="none">
                             <form method="POST" action="/logout">
                                 @csrf
@@ -76,20 +73,19 @@
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
             </svg>
         </button>
-        <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+        <div id="navbar-default" class="hidden w-full md:block md:w-auto" id="navbar-default">
             <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                 <li>
                     <a href="/" class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500" aria-current="page">Home</a>
                 </li>
-
                 <li>
                     <a href="#about" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Tentang Kami</a>
                 </li>
                 <li>
-                    <a href="/meditasi" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Meditasi</a>
+                    <a href="/meditasi" data-require-login="true" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Meditasi</a>
                 </li>
                 <li>
-                    <a href="/tesKepribadian" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Tes Kepribadian</a>
+                    <a href="/tesKepribadian" data-require-login="true" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Tes Kepribadian</a>
                 </li>
                 <li>
                     <a href="/login" class="block py-2 px-3 border border-gray-700 rounded text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 dark:text-white dark:border-gray-600 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Masuk</a>
@@ -99,7 +95,7 @@
         @endauth
     </div>
 </nav>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
    document.addEventListener('DOMContentLoaded', () => {
   const menuButton = document.getElementById('menu-button');
@@ -135,4 +131,27 @@ toggleButton.addEventListener('click', () => {
   toggleButton.setAttribute('aria-expanded', !isExpanded);
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+    const isLoggedIn = false; // Ganti dengan logika untuk memeriksa status login (misalnya, dari session atau API)
+
+    document.querySelectorAll('[data-require-login="true"]').forEach(link => {
+        link.addEventListener("click", (event) => {
+            if (!isLoggedIn) {
+                event.preventDefault(); // Cegah navigasi default
+                window.location.href = "/login"; // Arahkan ke halaman login
+            }
+        });
+    });
+});
+
+@if (session('logout'))
+    Swal.fire({
+        icon: 'success',
+        title: 'Berhasil Keluar!',
+        text: '{{ session('logout') }}',
+        customClass: {
+            confirmButton: 'btn-confirm'
+        }
+    });
+@endif
 </script>

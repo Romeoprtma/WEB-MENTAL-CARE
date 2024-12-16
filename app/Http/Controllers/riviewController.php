@@ -21,6 +21,9 @@ class riviewController extends Controller
             'rating' => $request->rating,
             'review' => $request->review,
         ]);
+
+        session()->flash('success', 'Review Anda telah dikirim');
+
         return redirect()->route(Auth::user()->role . '.home')->with('review', $review);
     }
 }

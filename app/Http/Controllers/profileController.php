@@ -39,13 +39,12 @@ class profileController extends Controller
 
             // Simpan gambar baru
             $imageFile = $request->file('image');
-            $imageName = $imageFile->getClientOriginalName();
+            $imageName = time() . '_' . $imageFile->getClientOriginalName();
             $imageFile = $imageFile->storeAs('images', $imageName);
 
             // Simpan path gambar ke database
             $users->image = $imageFile;
         }
-
 
         $users->update([
             'name'=>$request->name,

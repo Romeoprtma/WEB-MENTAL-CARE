@@ -26,9 +26,9 @@ class loginController extends Controller
 
             // Arahkan pengguna berdasarkan role mereka
             if ($user->role === 'user') {
-                return redirect('user/home')->with('success', 'Selamat datang, ' . $user->name);
+                return redirect()->intended('/user/home')->with('success', 'Selamat datang, ' . $user->name);
             } elseif ($user->role === 'psikolog') {
-                return redirect('psikolog/home')->with('success', 'Selamat datang, ' . $user->name);
+                return redirect()->intended('/psikolog/home')->with('success', 'Selamat datang, ' . $user->name);
             }
         }
 
@@ -134,6 +134,7 @@ class loginController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
+        session()->flash('logout', 'You have successfully logged out.');
         return redirect('/');
     }
 }

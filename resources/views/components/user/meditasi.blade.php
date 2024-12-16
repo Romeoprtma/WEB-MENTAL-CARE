@@ -140,5 +140,7 @@ function updateCurrentTime(audio, currentTimeId, progressBarId) {
     const progressPercent = (audio.currentTime / audio.duration) * 100;
     progressBarElement.style.width = `${progressPercent}%`;
 }
+
+
 </script>
 @endsection

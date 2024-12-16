@@ -15,6 +15,13 @@
     @include('partials.sidebar')
     <div>
         @yield('homeAdmin')
+        @yield('kelolaUser')
+        @yield('kelolaPsikolog')
+        @yield('tambahPsikolog')
+        @yield('editPsikolog')
+        @yield('kelolaMeditasi')
+        @yield('tambahLagu')
+        @yield('editLagu')
     </div>
     @include('partials.footer')
     @livewireScripts
