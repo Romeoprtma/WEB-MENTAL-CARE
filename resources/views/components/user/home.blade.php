@@ -114,88 +114,99 @@
             </div>
         </div>
         <!-- Link to see more -->
+        @auth
         <div class="flex justify-center mt-16 text-lg sm:text-xl md:text-2xl dark:text-white text-white">
-            <a href="/psikolog" class="hover:underline">Lihat Psikolog Lainnya →</a>
+            <a href="{{url(Auth::user()->role.'/listPsikolog')}}" class="hover:underline">Lihat Psikolog Lainnya →</a>
         </div>
+        @else
+        <div class="flex justify-center mt-16 text-lg sm:text-xl md:text-2xl dark:text-white text-white">
+            <a href="/listPsikolog" class="hover:underline">Lihat Psikolog Lainnya →</a>
+        </div>
+        @endauth
     </div>
 </section>
 
 {{-- User Review --}}
-<section id="reviews" class="min-h-screen py-8 px-4 bg-gray-100 dark:bg-gray-900">
+<section id="reviews" class="min-h-screen py-12 px-4 bg-gray-100 dark:bg-gray-900">
     <div class="max-w-4xl mx-auto">
-      <h2 class="text-2xl font-bold text-gray-800 dark:text-white text-center mb-6">
-        User Reviews
-      </h2>
-      <!-- Review Form -->
-      <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
-        <form method="POST">
-          <!-- Star Rating -->
-          <div class="flex items-center mb-4">
-            <label class="text-gray-800 dark:text-gray-200 font-semibold mr-4">Rating:</label>
-            <div class="flex space-x-2">
-                {{-- Bintang --}}
-              <button type="button" class="rating-star">
-                <svg class="w-6 h-6 text-gray-400 hover:text-yellow-500" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.518 4.674a1 1 0 00.95.69h4.91c.969 0 1.371 1.24.588 1.81l-3.97 2.884a1 1 0 00-.364 1.118l1.518 4.674c.3.921-.755 1.688-1.538 1.118l-3.97-2.884a1 1 0 00-1.175 0l-3.97 2.884c-.783.57-1.838-.197-1.539-1.118l1.519-4.674a1 1 0 00-.365-1.118l-3.97-2.884c-.783-.57-.38-1.81.588-1.81h4.91a1 1 0 00.951-.69l1.518-4.674z" />
-                </svg>
-              </button>
-              <button type="button" class="rating-star">
-                <svg class="w-6 h-6 text-gray-400 hover:text-yellow-500" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.518 4.674a1 1 0 00.95.69h4.91c.969 0 1.371 1.24.588 1.81l-3.97 2.884a1 1 0 00-.364 1.118l1.518 4.674c.3.921-.755 1.688-1.538 1.118l-3.97-2.884a1 1 0 00-1.175 0l-3.97 2.884c-.783.57-1.838-.197-1.539-1.118l1.519-4.674a1 1 0 00-.365-1.118l-3.97-2.884c-.783-.57-.38-1.81.588-1.81h4.91a1 1 0 00.951-.69l1.518-4.674z" />
-                </svg>
-              </button>
-              <button type="button" class="rating-star">
-                <svg class="w-6 h-6 text-gray-400 hover:text-yellow-500" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.518 4.674a1 1 0 00.95.69h4.91c.969 0 1.371 1.24.588 1.81l-3.97 2.884a1 1 0 00-.364 1.118l1.518 4.674c.3.921-.755 1.688-1.538 1.118l-3.97-2.884a1 1 0 00-1.175 0l-3.97 2.884c-.783.57-1.838-.197-1.539-1.118l1.519-4.674a1 1 0 00-.365-1.118l-3.97-2.884c-.783-.57-.38-1.81.588-1.81h4.91a1 1 0 00.951-.69l1.518-4.674z" />
-                </svg>
-              </button>
-              <button type="button" class="rating-star">
-                <svg class="w-6 h-6 text-gray-400 hover:text-yellow-500" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.518 4.674a1 1 0 00.95.69h4.91c.969 0 1.371 1.24.588 1.81l-3.97 2.884a1 1 0 00-.364 1.118l1.518 4.674c.3.921-.755 1.688-1.538 1.118l-3.97-2.884a1 1 0 00-1.175 0l-3.97 2.884c-.783.57-1.838-.197-1.539-1.118l1.519-4.674a1 1 0 00-.365-1.118l-3.97-2.884c-.783-.57-.38-1.81.588-1.81h4.91a1 1 0 00.951-.69l1.518-4.674z" />
-                </svg>
-              </button>
-              <button type="button" class="rating-star">
-                <svg class="w-6 h-6 text-gray-400 hover:text-yellow-500" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.518 4.674a1 1 0 00.95.69h4.91c.969 0 1.371 1.24.588 1.81l-3.97 2.884a1 1 0 00-.364 1.118l1.518 4.674c.3.921-.755 1.688-1.538 1.118l-3.97-2.884a1 1 0 00-1.175 0l-3.97 2.884c-.783.57-1.838-.197-1.539-1.118l1.519-4.674a1 1 0 00-.365-1.118l-3.97-2.884c-.783-.57-.38-1.81.588-1.81h4.91a1 1 0 00.951-.69l1.518-4.674z" />
-                </svg>
-              </button>
+
+
+        <!-- Form for Submitting Reviews -->
+        @if(Auth::check() && Auth::user()->role == 'user')
+            <h2 class="text-3xl font-extrabold text-gray-800 dark:text-white text-center mb-8">
+                User Reviews
+            </h2>
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
+                <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-4">
+                    Share Your Experience
+                </h3>
+                <form method="POST" action="{{ route('reviews.store') }}">
+                    @csrf
+                    <!-- Rating Section -->
+                    <div class="flex items-center mb-6">
+                        <label for="rating" class="text-gray-800 dark:text-gray-200 font-medium mr-4">Rating:</label>
+                        <div id="rating-group" class="flex space-x-2">
+                            @for($i = 1; $i <= 5; $i++)
+                                <button type="button"
+                                    class="rating-btn text-gray-300 hover:text-yellow-500 text-2xl focus:outline-none"
+                                    data-value="{{ $i }}">★</button>
+                            @endfor
+                        </div>
+                        <input type="hidden" id="rating" name="rating" value="">
+                    </div>
+                    <!-- Review Textarea -->
+                    <div class="mb-6">
+                        <label for="review" class="block text-gray-800 dark:text-gray-200 font-semibold mb-2">Your Review:</label>
+                        <textarea id="review" name="review" rows="4"
+                            class="w-full p-4 border border-gray-300 rounded-lg focus:ring focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white resize-none"
+                            placeholder="Write your review here..."></textarea>
+                    </div>
+                    <!-- Submit Button -->
+                    <div class="text-right">
+                        <button type="submit"
+                            class="bg-blue-600 text-white px-8 py-2 rounded-lg hover:bg-blue-700 transition duration-200">
+                            Submit
+                        </button>
+                    </div>
+                </form>
             </div>
-          </div>
-          <!-- Review Text -->
-          <div class="mb-4">
-            <label for="review" class="block text-gray-800 dark:text-gray-200 font-semibold mb-2">Your Review:</label>
-            <textarea id="review" rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white"></textarea>
-        </div>
-        <!-- Submit Button -->
-        <div class="text-right">
-            <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition duration-200">
-                Submit
-            </button>
-        </div>
-        </form>
-    </div>
-    <!-- Reviews List -->
-    <div class="mt-8">
-        <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-4">Recent Reviews</h3>
-        <div class="space-y-4">
-        <!-- Example Review -->
-        <div class="p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md">
-            <div class="flex items-center mb-2">
-              <div class="flex space-x-1 text-yellow-500">
-                <!-- Example filled stars -->
-                <svg class="w-5 h-5" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.518 4.674a1 1 0 00.95.69h4.91c.969 0 1.371 1.24.588 1.81l-3.97 2.884a1 1 0 00-.364 1.118l1.518 4.674c.3.921-.755 1.688-1.538 1.118l-3.97-2.884a1 1 0 00-1.175 0l-3.97 2.884c-.783.57-1.838-.197-1.539-1.118l1.519-4.674a1 1 0 00-.365-1.118l-3.97-2.884c-.783-.57-.38-1.81.588-1.81h4.91a1 1 0 00.951-.69l1.518-4.674z" />
-                </svg>
+        @endif
+
+        <!-- Reviews List -->
+        <div class="mt-12">
+            <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-6 text-center">
+                What Others Are Saying
+            </h3>
+            <div class="space-y-6">
+                @forelse($reviews as $review)
+                    <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+                        <div class="flex items-center mb-2">
+                            <span class="font-bold text-gray-800 dark:text-white">{{ $review->name }}</span>
+                            <span
+                                class="ml-auto text-sm text-gray-500 dark:text-gray-400">{{ $review->created_at->diffForHumans() }}</span>
+                        </div>
+                        <div class="flex items-center mb-3">
+                            <!-- Star Rating -->
+                            @for($i = 1; $i <= 5; $i++)
+                                <span
+                                    class="{{ $i <= $review->rating ? 'text-yellow-500' : 'text-gray-300' }} text-lg">★</span>
+                            @endfor
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                            {{ $review->review }}
+                        </p>
+                    </div>
+                @empty
+                    <p class="text-gray-800 dark:text-gray-300 text-center">
+                        No reviews yet. Be the first to share your experience!
+                    </p>
+                @endforelse
             </div>
-            <span class="ml-2 text-gray-700 dark:text-gray-300">John Doe</span>
-            </div>
-            <p class="text-gray-600 dark:text-gray-400">Great app, very helpful for mental health support!</p>
         </div>
-        <!-- Repeat for other reviews -->
-        </div>
-    </div>
     </div>
 </section>
+
+
 
 <script>
         // Tampilkan loader saat halaman dimuat
@@ -216,5 +227,23 @@ function hideLoader() {
     loadingScreen.style.visibility = "hidden";
     loadingScreen.style.display = "none";
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    const ratingBtns = document.querySelectorAll('.rating-btn');
+    const ratingInput = document.getElementById('rating');
+
+    ratingBtns.forEach((btn) => {
+        btn.addEventListener('click', function () {
+            const value = this.getAttribute('data-value');
+            ratingInput.value = value;
+
+            // Highlight stars up to the selected one
+            ratingBtns.forEach((star, index) => {
+                star.classList.toggle('text-yellow-500', index < value);
+                star.classList.toggle('text-gray-300', index >= value);
+            });
+        });
+    });
+});
 </script>
 @endsection

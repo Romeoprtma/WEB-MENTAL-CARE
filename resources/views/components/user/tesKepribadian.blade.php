@@ -213,7 +213,7 @@
         .then(data => {
             if (data.message) {
                 alert(data.message);
-             document.getElementById('testResults').classList.remove('hidden');
+            document.getElementById('testResults').classList.remove('hidden');
                 document.getElementById('testConclusion').classList.remove('hidden');
             }
         })
