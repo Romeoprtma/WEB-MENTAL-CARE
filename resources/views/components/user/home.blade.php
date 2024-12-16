@@ -1,5 +1,6 @@
 @extends('layouts.main')
 @section('home')
+
 {{-- Home --}}
 <section class="flex flex-col lg:flex-row justify-between items-center bg-[#756AB6] px-4 lg:px-20 h-auto lg:h-[668px] py-10 lg:py-0">
     <!-- Text Section -->
@@ -41,6 +42,7 @@
         </div>
     </div>
 </section>
+
 {{-- List psikolog terbaik --}}
 <section id="konsul" class="flex justify-center items-center min-h-screen bg-[#756AB6] px-4 md:px-8">
     <div class="py-4 w-full max-w-5xl">
@@ -48,70 +50,38 @@
             <h1 class="text-2xl sm:text-3xl font-semibold text-white">Psikolog Terbaik</h1>
             <h3 class="text-lg sm:text-xl mt-2 text-white">Pilih sesuai kemauanmu!</h3>
         </div>
-
         <!-- Grid layout for cards with responsive columns -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-black">
+        <div class="grid justify-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-black">
+            @foreach ($psikologs as $index => $item)
             <!-- Psikolog 1 -->
             <div class="card bg-base-100 rounded shadow-xl dark:text-white bg-gray-100 dark:bg-[#432E54] p-3 sm:p-4">
                 <figure class="px-4 pt-4">
                     <img
-                        src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
+                        src="{{ Storage::url($item->image) }}"
                         alt="Psikolog Image"
                         class="rounded-xl w-full object-cover" />
                 </figure>
                 <div class="card-body items-center text-center px-2">
-                    <h2 class="card-title text-md sm:text-lg font-bold mt-2">Psikolog 1</h2>
-                    <p class="text-xs sm:text-sm mt-2">Jika seorang psikolog bisa membantu, siapa yang akan ia bantu?</p>
+                    <h2 class="card-title text-md sm:text-lg font-bold mt-2">{{ $item->name }}</h2>
+                    <p class="text-xs sm:text-sm mt-2">{{ $item->deskripsi }}</p>
                     <div class="card-actions mt-4">
-                        <a href="">
+                        @auth
+                        <a href="{{url(Auth::user()->role.'/chat')}}" >
                             <button class="border-2 font-bold border-blue-500 px-3 py-1 text-[#756AB6] rounded hover:bg-blue-500 hover:text-white dark:border-gray-300 dark:text-white dark:hover:bg-white dark:hover:text-gray-900 transition duration-200">
                                 Booking Konsultasi
                             </button>
                         </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Psikolog 2 -->
-            <div class="card bg-base-100 rounded shadow-xl dark:text-white bg-gray-100 dark:bg-[#432E54] p-3 sm:p-4">
-                <figure class="px-4 pt-4">
-                    <img
-                        src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                        alt="Psikolog Image"
-                        class="rounded-xl w-full object-cover" />
-                </figure>
-                <div class="card-body items-center text-center px-2">
-                    <h2 class="card-title text-md sm:text-lg font-bold mt-2">Psikolog 1</h2>
-                    <p class="text-xs sm:text-sm mt-2">Jika seorang psikolog bisa membantu, siapa yang akan ia bantu?</p>
-                    <div class="card-actions mt-4">
-                        <a href="">
+                        @else
+                        <a href="/chat" data-require-login="true">
                             <button class="border-2 font-bold border-blue-500 px-3 py-1 text-[#756AB6] rounded hover:bg-blue-500 hover:text-white dark:border-gray-300 dark:text-white dark:hover:bg-white dark:hover:text-gray-900 transition duration-200">
                                 Booking Konsultasi
                             </button>
                         </a>
+                        @endauth
                     </div>
                 </div>
             </div>
-            <!-- Psikolog 3 -->
-            <div class="card bg-base-100 rounded shadow-xl dark:text-white bg-gray-100 dark:bg-[#432E54] p-3 sm:p-4">
-                <figure class="px-4 pt-4">
-                    <img
-                        src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                        alt="Psikolog Image"
-                        class="rounded-xl w-full object-cover" />
-                </figure>
-                <div class="card-body items-center text-center px-2">
-                    <h2 class="card-title text-md sm:text-lg font-bold mt-2">Psikolog 1</h2>
-                    <p class="text-xs sm:text-sm mt-2">Jika seorang psikolog bisa membantu, siapa yang akan ia bantu?</p>
-                    <div class="card-actions mt-4">
-                        <a href="">
-                            <button class="border-2 font-bold border-blue-500 px-3 py-1 text-[#756AB6] rounded hover:bg-blue-500 hover:text-white dark:border-gray-300 dark:text-white dark:hover:bg-white dark:hover:text-gray-900 transition duration-200">
-                                Booking Konsultasi
-                            </button>
-                        </a>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
         <!-- Link to see more -->
         @auth
@@ -126,11 +96,15 @@
     </div>
 </section>
 
+
 {{-- User Review --}}
 <section id="reviews" class="min-h-screen py-12 px-4 bg-gray-100 dark:bg-gray-900">
     <div class="max-w-4xl mx-auto">
-
-
+        @if(session('success'))
+            <div class="bg-green-500 text-white p-4 rounded-lg mb-6 text-center">
+                {{ session('success') }}
+            </div>
+        @endif
         <!-- Form for Submitting Reviews -->
         @if(Auth::check() && Auth::user()->role == 'user')
             <h2 class="text-3xl font-extrabold text-gray-800 dark:text-white text-center mb-8">
@@ -206,44 +180,51 @@
     </div>
 </section>
 
+<div id="loadingScreen">
+    <div class="loader"></div>
+</div>
 
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-        // Tampilkan loader saat halaman dimuat
-        window.addEventListener('load', function () {
-        showLoader();
-    });
+    document.addEventListener('DOMContentLoaded', function () {
+        const ratingBtns = document.querySelectorAll('.rating-btn');
+        const ratingInput = document.getElementById('rating');
 
+        ratingBtns.forEach((btn) => {
+            btn.addEventListener('click', function () {
+                const value = this.getAttribute('data-value');
+                ratingInput.value = value;
 
-        // Tampilkan loader
-        function showLoader() {
-    const loadingScreen = document.getElementById("loadingScreen");
-    loadingScreen.style.visibility = "visible"; // Mengubah visibility menjadi terlihat
-    loadingScreen.style.display = "flex"; // Pastikan loader ditampilkan (gunakan flex agar loader berada di tengah)
-}
-
-function hideLoader() {
-    const loadingScreen = document.getElementById("loadingScreen");
-    loadingScreen.style.visibility = "hidden";
-    loadingScreen.style.display = "none";
-}
-
-document.addEventListener('DOMContentLoaded', function () {
-    const ratingBtns = document.querySelectorAll('.rating-btn');
-    const ratingInput = document.getElementById('rating');
-
-    ratingBtns.forEach((btn) => {
-        btn.addEventListener('click', function () {
-            const value = this.getAttribute('data-value');
-            ratingInput.value = value;
-
-            // Highlight stars up to the selected one
-            ratingBtns.forEach((star, index) => {
-                star.classList.toggle('text-yellow-500', index < value);
-                star.classList.toggle('text-gray-300', index >= value);
+                // Highlight stars up to the selected one
+                ratingBtns.forEach((star, index) => {
+                    star.classList.toggle('text-yellow-500', index < value);
+                    star.classList.toggle('text-gray-300', index >= value);
+                });
             });
         });
     });
-});
+    @if (session('success'))
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil!',
+            text: '{{ session('success') }}',
+            customClass: {
+                confirmButton: 'btn-confirm'
+            }
+        });
+    @endif
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const isLoggedIn = false; // Ganti dengan logika untuk memeriksa status login (misalnya, dari session atau API)
+
+        document.querySelectorAll('[data-require-login="true"]').forEach(link => {
+            link.addEventListener("click", (event) => {
+                if (!isLoggedIn) {
+                    event.preventDefault(); // Cegah navigasi default
+                    window.location.href = "/login"; // Arahkan ke halaman login
+                }
+            });
+        });
+    });
 </script>
 @endsection

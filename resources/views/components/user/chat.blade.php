@@ -3,8 +3,9 @@
 <!-- Halaman Chat Psikolog -->
 <section class="bg-white dark:bg-[#563A9C] py-8">
     <!-- Judul -->
+    @foreach ($psikologs as $index => $item)
     <div class="flex justify-center p-6">
-        <h1 class="text-2xl dark:text-white font-bold">Chat dengan Dr. Romeo Sp.KJ</h1>
+        <h1 class="text-2xl dark:text-white font-bold">{{ $item->name }}</h1>
     </div>
 
     <div class="max-w-4xl mx-auto space-y-6">
@@ -13,7 +14,7 @@
             <div class="space-y-4 h-96 overflow-auto p-4" id="chatArea">
                 <!-- Pesan Psikolog -->
                 <div class="flex items-start space-x-3">
-                    <img class="w-10 h-10 rounded-full" src="https://via.placeholder.com/150" alt="Psikolog">
+                    <img class="w-10 h-10 rounded-full" src="{{ Storage::url($item->image) }}" alt="Psikolog">
                     <div class="bg-purple-500 text-white p-3 rounded-lg">
                         <p>Selamat datang! Ada yang bisa saya bantu hari ini?</p>
                     </div>
@@ -29,13 +30,13 @@
 
                 <!-- Pesan Psikolog -->
                 <div class="flex items-start space-x-3">
-                    <img class="w-10 h-10 rounded-full" src="https://via.placeholder.com/150" alt="Psikolog">
+                    <img class="w-10 h-10 rounded-full" src="{{ Storage::url($item->image) }}" alt="Psikolog">
                     <div class="bg-purple-500 text-white p-3 rounded-lg">
                         <p>Terima kasih telah berbagi. Bisa ceritakan lebih lanjut tentang kecemasan Anda?</p>
                     </div>
                 </div>
             </div>
-
+            @endforeach
             <!-- Kolom Input Pesan -->
             <div class="flex items-center mt-4 space-x-2">
                 <input type="text" id="messageInput" class="flex-1 p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500" placeholder="Tulis pesan...">
@@ -48,7 +49,9 @@
         </div>
     </div>
 </section>
-
+<div id="loadingScreen">
+    <div class="loader"></div>
+</div>
 <script>
     // Fungsi untuk mengirim pesan
     function sendMessage() {

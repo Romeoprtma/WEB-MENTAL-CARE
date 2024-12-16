@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Psikolog;
 use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -9,8 +10,9 @@ use Illuminate\Support\Facades\Auth;
 class viewController extends Controller
 {
     public function viewHome(){
+        $psikologs = Psikolog::all();
         $reviews = Review::with('user')->latest()->get();
-        return view('components.user.home', compact('reviews'));
+        return view('components.user.home', compact('reviews', 'psikologs'));
     }
 
     public function viewMeditasi(){
@@ -20,6 +22,11 @@ class viewController extends Controller
         return view('components.admin.dashboardAdmin');
     }
     public function viewListPsikolog(){
-        return view('components.user.listPsikolog');
+        $psikologs = Psikolog::all();
+        return view('components.user.listPsikolog', compact('psikologs'));
+    }
+    public function viewChat(){
+        $psikologs = Psikolog::all();
+        return view('components.user.chat',compact('psikologs'));
     }
 }

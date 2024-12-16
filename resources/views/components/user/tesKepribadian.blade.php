@@ -125,7 +125,6 @@
         </button>
     </a>
 </div>
-
 </section>
 
 <script>
@@ -135,11 +134,6 @@
 
     // URL Apps Script
     const scriptURL = "https://script.google.com/macros/s/AKfycby7E2Bu38cf97borPc6Yw5hHDHu1cj1Bg2aswBQFAp7cGTrWZ-x3HkxmIBasDBk_SU/exec";
-
-    // Tampilkan loader saat halaman dimuat
-    window.addEventListener('load', () => {
-        showLoader();
-    });
 
     // Ambil data dari Apps Script
     fetch(scriptURL)
@@ -227,20 +221,5 @@
             submitButton.disabled = false; // Enable button after request completes
         });
     });
-
-    // Tampilkan loader
-    function showLoader() {
-    const loadingScreen = document.getElementById("loadingScreen");
-    loadingScreen.style.visibility = "visible"; // Mengubah visibility menjadi terlihat
-    loadingScreen.style.display = "flex"; // Pastikan loader ditampilkan (gunakan flex agar loader berada di tengah)
-}
-
-
-function hideLoader() {
-    const loadingScreen = document.getElementById("loadingScreen");
-    loadingScreen.style.visibility = "hidden";
-    loadingScreen.style.display = "none";
-}
-
 </script>
 @endsection

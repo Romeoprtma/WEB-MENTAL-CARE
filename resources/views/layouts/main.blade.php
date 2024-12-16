@@ -9,7 +9,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Mental Care</title>
 </head>
-<body>
+<body id="hideBody">
     @include('partials.navbar')
     <div>
         @yield('home')
@@ -20,7 +20,6 @@
         @yield('profile')
     </div>
     @include('partials.footer')
-
-    <script src="main.js"></script>
+    <script src="{{asset('js/loading.js')}}"></script>
 </body>
 </html>
