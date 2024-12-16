@@ -39,7 +39,7 @@ class profileController extends Controller
 
             // Simpan gambar baru
             $imageFile = $request->file('image');
-            $imageName = time() . '_' . $imageFile->getClientOriginalName();
+            $imageName = $imageFile->getClientOriginalName();
             $imageFile = $imageFile->storeAs('images', $imageName);
 
             // Simpan path gambar ke database

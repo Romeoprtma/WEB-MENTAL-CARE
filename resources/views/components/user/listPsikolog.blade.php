@@ -2,7 +2,7 @@
 @section('listPsikolog')
 
 <!-- Section Psikolog -->
-<section class="bg-[#756AB6] py-8">
+<section class="bg-[#756AB6] py-8 h-screen">
     <!-- Judul -->
     <div class="flex justify-center p-6">
         <h1 class="text-2xl text-white font-bold">List Psikolog</h1>
@@ -52,6 +52,9 @@
         <!-- Duplikasi Card Lain -->
     </div>
 </section>
+<div id="loadingScreen">
+    <div class="loader"></div>
+</div>
 
 <!-- detail Overlay -->
 <div id="detail" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">

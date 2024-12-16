@@ -1,5 +1,6 @@
 @extends('layouts.main')
 @section('home')
+
 {{-- Home --}}
 <section class="flex flex-col lg:flex-row justify-between items-center bg-[#756AB6] px-4 lg:px-20 h-auto lg:h-[668px] py-10 lg:py-0">
     <!-- Text Section -->
@@ -41,6 +42,7 @@
         </div>
     </div>
 </section>
+
 {{-- List psikolog terbaik --}}
 <section id="konsul" class="flex justify-center items-center min-h-screen bg-[#756AB6] px-4 md:px-8">
     <div class="py-4 w-full max-w-5xl">
@@ -126,6 +128,7 @@
     </div>
 </section>
 
+
 {{-- User Review --}}
 <section id="reviews" class="min-h-screen py-12 px-4 bg-gray-100 dark:bg-gray-900">
     <div class="max-w-4xl mx-auto">
@@ -206,44 +209,27 @@
     </div>
 </section>
 
-
+<div id="loadingScreen">
+    <div class="loader"></div>
+</div>
 
 <script>
-        // Tampilkan loader saat halaman dimuat
-        window.addEventListener('load', function () {
-        showLoader();
-    });
+    document.addEventListener('DOMContentLoaded', function () {
+        const ratingBtns = document.querySelectorAll('.rating-btn');
+        const ratingInput = document.getElementById('rating');
 
+        ratingBtns.forEach((btn) => {
+            btn.addEventListener('click', function () {
+                const value = this.getAttribute('data-value');
+                ratingInput.value = value;
 
-        // Tampilkan loader
-        function showLoader() {
-    const loadingScreen = document.getElementById("loadingScreen");
-    loadingScreen.style.visibility = "visible"; // Mengubah visibility menjadi terlihat
-    loadingScreen.style.display = "flex"; // Pastikan loader ditampilkan (gunakan flex agar loader berada di tengah)
-}
-
-function hideLoader() {
-    const loadingScreen = document.getElementById("loadingScreen");
-    loadingScreen.style.visibility = "hidden";
-    loadingScreen.style.display = "none";
-}
-
-document.addEventListener('DOMContentLoaded', function () {
-    const ratingBtns = document.querySelectorAll('.rating-btn');
-    const ratingInput = document.getElementById('rating');
-
-    ratingBtns.forEach((btn) => {
-        btn.addEventListener('click', function () {
-            const value = this.getAttribute('data-value');
-            ratingInput.value = value;
-
-            // Highlight stars up to the selected one
-            ratingBtns.forEach((star, index) => {
-                star.classList.toggle('text-yellow-500', index < value);
-                star.classList.toggle('text-gray-300', index >= value);
+                // Highlight stars up to the selected one
+                ratingBtns.forEach((star, index) => {
+                    star.classList.toggle('text-yellow-500', index < value);
+                    star.classList.toggle('text-gray-300', index >= value);
+                });
             });
         });
     });
-});
 </script>
 @endsection
