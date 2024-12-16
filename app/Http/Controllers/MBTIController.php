@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MBTIController extends Controller
 {
@@ -128,11 +130,12 @@ public function printTes() {
         $string4 = "JUDGING";
     }
 
+    $users = Auth::user()->name;
     $pdf = Pdf::loadView('components.laporanHasilTes', compact(
         'optionA1', 'optionB1', 'optionA2', 'optionB2',
         'optionA3', 'optionB3', 'optionA4', 'optionB4',
         'choice1', 'choice2', 'choice3', 'choice4',
-        'string1', 'string2', 'string3', 'string4'
+        'string1', 'string2', 'string3', 'string4','users'
     ));
     return $pdf->stream('hasilTes.pdf');
 

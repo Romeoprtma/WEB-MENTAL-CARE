@@ -17,7 +17,7 @@
                     <div class="rounded-full overflow-hidden">
                         @if($users->image)
                             <!-- Tampilkan gambar user jika ada -->
-                            <img src="{{ asset('storage/images' . $users->image) }}" alt="User Image" width="100" height="100" class="object-cover rounded-full">
+                            <img src="{{ Storage::url($users->image) }}" alt="User Image" class="w-10 h-10 rounded-full mx-auto">
                         @else
                             <!-- Jika tidak ada, tampilkan gambar default -->
                             <svg class="rounded-full text-gray-800 dark:text-white fill-current" xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 448 512">
