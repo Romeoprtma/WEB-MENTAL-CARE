@@ -66,39 +66,39 @@ class PsikologController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Psikolog $psikolog)
+    public function edit(Psikolog $kelolaPsikolog)
     {
-        return view('components.admin.editPsikolog', compact('psikolog'));
+        return view('components.admin.editPsikolog', compact('kelolaPsikolog'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Psikolog $psikolog)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'deskripsi' => 'nullable|string|max:255',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-        ]);
+    public function update(Request $request, Psikolog $kelolaPsikolog)
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'deskripsi' => 'nullable|string|max:255',
+        'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+    ]);
 
-        if ($request->hasFile('image')) {
-            // Hapus gambar lama jika ada
-            if ($psikolog->image) {
-                Storage::disk('public')->delete($psikolog->image);
-            }
-
-            $psikolog->image = $request->file('image')->store('images/psikolog', 'public');
+    if ($request->hasFile('image')) {
+        if ($kelolaPsikolog->image) {
+            Storage::disk('public')->delete($kelolaPsikolog->image);
         }
-
-        $psikolog->update([
-            'name' => $request->name,
-            'deskripsi' => $request->deskripsi,
-            'image' => $psikolog->image,
-        ]);
-
-        return redirect()->route('psikolog.index')->with('success', 'Psikolog berhasil diperbarui!');
+        $kelolaPsikolog->image = $request->file('image')->store('images/psikolog', 'public');
     }
+
+    $kelolaPsikolog->update([
+        'name' => $request->name,
+        'deskripsi' => $request->deskripsi,
+        'image' => $kelolaPsikolog->image ?? $kelolaPsikolog->image,
+    ]);
+
+    return redirect()->route('kelolaPsikolog.index')->with('success', 'Psikolog berhasil diperbarui!');
+}
+
+
 
     /**
      * Remove the specified resource from storage.

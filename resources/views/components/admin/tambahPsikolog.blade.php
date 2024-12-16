@@ -2,7 +2,7 @@
 @section('tambahPsikolog')
 <div class="p-4 sm:ml-64 flex justify-center">
     <div class="w-full max-w-6xl">
-        <div class="bg-white p-2">
+        <div class="bg-white p-4">
             <h1 class="text-2xl font-bold text-gray-800 mb-6 text-start">FORM TAMBAH PSIKOLOG</h1>
             <form action="{{ route('kelolaPsikolog.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                 @csrf

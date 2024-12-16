@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\MBTIController;
 use App\Http\Controllers\loginController;
+use App\Http\Controllers\MeditasiController;
 use App\Http\Controllers\PsikologController;
 use App\Http\Controllers\viewController;
 use App\Livewire\UserChart;
@@ -58,7 +59,7 @@ Route::middleware(['auth','user-access:admin'])->prefix('admin')->group(function
     Route::get('/kelolaUser',[Admin::class ,'kelolaUser'])->name('admin.index');
     Route::delete('/admin/delete/{id}', [Admin::class, 'deleteUser'])->name('admin.delete');
     Route::resource('kelolaPsikolog', PsikologController::class);
-
+    Route::resource('kelolaMeditasi', MeditasiController::class);
     // Register Admin
     Route::get('/registerAdmin', [loginController::class, 'showRegisterAdmin'])->name('registerAdmin');
     Route::post('/registerAdmin', [loginController::class, 'registerAdmin']);
