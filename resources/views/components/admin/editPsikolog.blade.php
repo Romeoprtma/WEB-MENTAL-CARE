@@ -10,21 +10,36 @@
                 @csrf
                 @method('PUT') <!-- Mengganti metode menjadi PUT -->
 
-                <div class="mb-6">
-                    <label for="name">Nama</label>
-                    <input type="text" name="name" id="name" value="{{ old('name', $kelolaPsikolog->name) }}"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#756AB6]">
+                <!-- Input Nama Psikolog -->
+                <div>
+                    <label for="name" class="block text-sm font-medium text-gray-700">Nama Psikolog</label>
+                    <input type="text" name="name" id="name" placeholder="Masukkan Nama Psikolog" value="{{ old('name', $kelolaPsikolog->name) }}" required class="p-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                     @error('name')
-                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        <div class="text-red-500 text-sm">{{ $message }}</div>
                     @enderror
                 </div>
-
-                <div class="mb-6">
-                    <label for="deskripsi" class="block text-gray-700 font-bold mb-2">Deskripsi</label>
-                    <textarea name="deskripsi" id="deskripsi"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#756AB6]">{{ old('deskripsi', $kelolaPsikolog->deskripsi) }}</textarea>
-                    @error('deskripsi')
-                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                {{-- email --}}
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700">Email Psikolog</label>
+                    <input type="text" name="email" id="email" placeholder="Masukkan Nama Psikolog" value="{{ old('email', $kelolaPsikolog->email) }}" required class="p-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                    @error('email')
+                        <div class="text-red-500 text-sm">{{ $message }}</div>
+                    @enderror
+                </div>
+                {{-- phone --}}
+                <div>
+                    <label for="phone" class="block text-sm font-medium text-gray-700">No Telpon</label>
+                    <input type="number" name="phone" id="phone" placeholder="Masukkan Nama Psikolog" value="{{ old('phone', $kelolaPsikolog->phone) }}" required class="p-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                    @error('phone')
+                        <div class="text-red-500 text-sm">{{ $message }}</div>
+                    @enderror
+                </div>
+                {{-- alamat --}}
+                <div>
+                    <label for="address" class="block text-sm font-medium text-gray-700">Alamat Psikolog</label>
+                    <textarea type="text" name="address" id="address" placeholder="Masukkan Nama Psikolog" required class="p-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">{{ old('address', $kelolaPsikolog->address) }}</textarea>
+                    @error('address')
+                        <div class="text-red-500 text-sm">{{ $message }}</div>
                     @enderror
                 </div>
 

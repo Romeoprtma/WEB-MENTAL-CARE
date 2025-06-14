@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Psikolog;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class PsikologController extends Controller
@@ -15,9 +15,9 @@ class PsikologController extends Controller
      */
     public function index()
 {
-    $psikologs = Psikolog::all();
-    $daftarPsikolog = User::where('role', 'psikolog')->select('name')->get();
-    return view('components.admin.kelolaPsikolog', compact('psikologs', 'daftarPsikolog'));
+    $psikolog = User::whereIn('role', ['psikolog'])->get();
+    $psikologs = User::where('role', 'psikolog')->select('id')->get();
+    return view('components.admin.kelolaPsikolog', compact('psikologs', 'psikolog'));
 }
 
 
@@ -26,18 +26,18 @@ class PsikologController extends Controller
      */
     public function create()
     {
-        $users = User::where('role', 'psikolog')->select('name')->get();
+        $users = User::where('role', 'psikolog')->select('id')->get();
         return view('components.admin.tambahPsikolog', compact('users'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $request->validate([
             'name' => 'required|string|max:225',
-            'deskripsi' => 'nullable|string|max:255',
+            'email' => 'nullable|string|max:255',
+            'address' => 'nullable|string|max:255',
+            'phone' => 'nullable|string|max:255',
+            'password' => 'required|string|min:6|confirmed',
             'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
@@ -46,39 +46,33 @@ class PsikologController extends Controller
             $imagePath = $request->file('image')->store('images', 'public');
         }
 
-        Psikolog::create([
+        User::create([
             'name' => $request->name,
-            'deskripsi' => $request->deskripsi,
+            'email' => $request->email,
+            'address' => $request->address,
+            'phone' => $request->phone,
+            'password' => Hash::make($request->password),
+            'role' => 'psikolog',
             'image' => $imagePath,
         ]);
 
         return redirect()->route('kelolaPsikolog.index')->with('success', 'Psikolog berhasil ditambahkan!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Psikolog $psikolog)
+    public function edit(User $kelolaPsikolog)
     {
-        // return view('components.admin.detailPsikolog', compact('psikolog'));
+        $psikolog = User::whereIn('role', ['psikolog'])->get();
+        return view('components.admin.editPsikolog', compact('psikolog', 'kelolaPsikolog'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Psikolog $kelolaPsikolog)
-    {
-        return view('components.admin.editPsikolog', compact('kelolaPsikolog'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Psikolog $kelolaPsikolog)
+    public function update(Request $request, User $kelolaPsikolog)
 {
+    $psikolog = User::whereIn('role', ['psikolog'])->get();
     $request->validate([
-        'name' => 'required|string|max:255',
-        'deskripsi' => 'nullable|string|max:255',
+        'name' => 'required|string|max:225',
+        'email' => 'nullable|string|max:255',
+        'address' => 'nullable|string|max:255',
+        'phone' => 'nullable|string|max:255',
         'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
     ]);
 
@@ -91,21 +85,19 @@ class PsikologController extends Controller
 
     $kelolaPsikolog->update([
         'name' => $request->name,
-        'deskripsi' => $request->deskripsi,
+        'email' => $request->email,
+        'address' => $request->address,
+        'phone' => $request->phone,
+        'role' => 'psikolog',
         'image' => $kelolaPsikolog->image ?? $kelolaPsikolog->image,
     ]);
 
     return redirect()->route('kelolaPsikolog.index')->with('success', 'Psikolog berhasil diperbarui!');
 }
 
-
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Psikolog $psikolog, $id)
+    public function destroy($id)
     {
-        $psikolog = Psikolog::findOrFail($id);
+        $psikolog = User::findOrFail($id);
         if ($psikolog->image) {
             Storage::disk('public')->delete($psikolog->image);
         }

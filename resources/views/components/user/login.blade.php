@@ -31,11 +31,6 @@
                     </span>
                 </div>
                 <h5 id="passwordError" class="error-message">*Password tidak cocok</h5>
-                <select class="role-select" name="role" required>
-                    <option value="" disabled selected>Pilih Role</option>
-                    <option value="user">User</option>
-                    <option value="psikolog">Psikolog</option>
-                </select>
                 <button type="submit">Daftar</button>
             </form>
         </div>

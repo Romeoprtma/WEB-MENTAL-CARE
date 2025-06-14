@@ -6,7 +6,7 @@
         <h1 class="text-2xl font-bold text-gray-800 mb-6 text-start">KELOLA USER</h1>
 
         {{-- Table Psikolog --}}
-        <div class="overflow-x-auto mb-6">
+        {{-- <div class="overflow-x-auto mb-6">
             <table class="w-full border-collapse border border-gray-200 rounded-lg overflow-hidden shadow-md">
                 <thead class="bg-[#756AB6] text-white">
                     <tr>
@@ -55,7 +55,7 @@
                     @endforelse
                 </tbody>
             </table>
-        </div>
+        </div> --}}
 
         {{-- Table User --}}
         <div class="overflow-x-auto mb-6">

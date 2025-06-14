@@ -44,81 +44,142 @@
 </section>
 
 {{-- List psikolog terbaik --}}
-<section id="konsul" class="flex justify-center items-center min-h-screen bg-[#756AB6] px-4 md:px-8">
-    <div class="py-4 w-full max-w-5xl">
-        <div class="text-center mb-6">
-            <h1 class="text-2xl sm:text-3xl font-semibold text-white">Psikolog Terbaik</h1>
-            <h3 class="text-lg sm:text-xl mt-2 text-white">Pilih sesuai kemauanmu!</h3>
-        </div>
-        <!-- Grid layout for cards with responsive columns -->
-        <div class="grid justify-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-black">
-            @foreach ($psikologs as $index => $item)
-            <!-- Psikolog 1 -->
-            <div class="card bg-base-100 rounded shadow-xl dark:text-white bg-gray-100 dark:bg-[#432E54] p-3 sm:p-4">
-                <figure class="px-4 pt-4">
-                    <img
-                        src="{{ Storage::url($item->image) }}"
-                        alt="Psikolog Image"
-                        class="rounded-xl w-full object-cover" />
-                </figure>
-                <div class="card-body items-center text-center px-2">
-                    <h2 class="card-title text-md sm:text-lg font-bold mt-2">{{ $item->name }}</h2>
-                    <p class="text-xs sm:text-sm mt-2">{{ $item->deskripsi }}</p>
-                    <div class="card-actions mt-4">
-                        @auth
-                        <a href="{{url(Auth::user()->role.'/chat')}}" >
-                            <button class="border-2 font-bold border-blue-500 px-3 py-1 text-[#756AB6] rounded hover:bg-blue-500 hover:text-white dark:border-gray-300 dark:text-white dark:hover:bg-white dark:hover:text-gray-900 transition duration-200">
-                                Booking Konsultasi
-                            </button>
-                        </a>
-                        @else
-                        <a href="/chat" data-require-login="true">
-                            <button class="border-2 font-bold border-blue-500 px-3 py-1 text-[#756AB6] rounded hover:bg-blue-500 hover:text-white dark:border-gray-300 dark:text-white dark:hover:bg-white dark:hover:text-gray-900 transition duration-200">
-                                Booking Konsultasi
-                            </button>
-                        </a>
-                        @endauth
+@auth
+    @if(Auth::user()->role === 'user')
+        {{-- Section untuk user --}}
+        <section id="konsul" class="flex justify-center items-center min-h-screen bg-[#756AB6] px-4 md:px-8">
+            <div class="py-4 w-full max-w-5xl">
+                <div class="text-center mb-6">
+                    <h1 class="text-2xl sm:text-3xl font-semibold text-white">Psikolog Terbaik</h1>
+                    <h3 class="text-lg sm:text-xl mt-2 text-white">Pilih sesuai kemauanmu!</h3>
+                </div>
+                <div class="grid justify-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-black">
+                    @foreach ($psikolog as $index => $item)
+                    <div class="card bg-base-100 rounded shadow-xl dark:text-white bg-gray-100 dark:bg-[#432E54] p-3 sm:p-4">
+                        <figure class="px-4 pt-4">
+                            <img
+                                src="{{ Storage::url($item->image) }}"
+                                alt="Psikolog Image"
+                                class="rounded-xl w-full object-cover" />
+                        </figure>
+                        <div class="card-body items-center text-center px-2">
+                            <h2 class="card-title text-md sm:text-lg font-bold mt-2">{{ $item->name }}</h2>
+                            <div class="card-actions mt-4">
+                                <a href="{{ route('user.chat', ['userId' => $item->id]) }}">
+                                    <button class="border-2 font-bold border-blue-500 px-3 py-1 text-[#756AB6] rounded hover:bg-blue-500 hover:text-white dark:border-gray-300 dark:text-white dark:hover:bg-white dark:hover:text-gray-900 transition duration-200">
+                                        Booking Konsultasi
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
                     </div>
+                    @endforeach
+                </div>
+                <div class="flex justify-center mt-16 text-lg sm:text-xl md:text-2xl dark:text-white text-white">
+                    <a href="{{ url('user/listPsikolog') }}" class="hover:underline">Lihat Psikolog Lainnya →</a>
                 </div>
             </div>
-            @endforeach
+        </section>
+    @elseif(Auth::user()->role === 'psikolog')
+        {{-- Section khusus untuk psikolog --}}
+        <section class="flex justify-center items-center min-h-screen bg-[#756AB6] px-4 md:px-8">
+    <div class="w-full max-w-6xl py-10">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 dark:text-white">Selamat datang, {{ Auth::user()->name }}!</h1>
+            <p class="mt-2 text-lg text-gray-600 dark:text-gray-300">Berikut adalah daftar user yang pernah berkonsultasi dengan Anda:</p>
         </div>
-        <!-- Link to see more -->
-        @auth
-        <div class="flex justify-center mt-16 text-lg sm:text-xl md:text-2xl dark:text-white text-white">
-            <a href="{{url(Auth::user()->role.'/listPsikolog')}}" class="hover:underline">Lihat Psikolog Lainnya →</a>
+
+        {{-- @if($konsultasis->isEmpty())
+            <div class="text-center text-gray-500 dark:text-gray-300">
+                <p>Belum ada riwayat konsultasi.</p>
+            </div> --}}
+        {{-- @else
+        <div class="overflow-x-auto">
+            <table class="min-w-full table-auto bg-white dark:bg-[#333] shadow-md rounded">
+                <thead>
+                    <tr class="bg-[#756AB6] text-white text-left">
+                        <th class="px-4 py-2">No</th>
+                        <th class="px-4 py-2">Nama User</th>
+                        <th class="px-4 py-2">Email</th>
+                        <th class="px-4 py-2">Tanggal Konsultasi</th>
+                        <th class="px-4 py-2">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($konsultasis as $index => $konsultasi)
+                    <tr class="border-b dark:border-gray-600">
+                        <td class="px-4 py-2">{{ $index + 1 }}</td>
+                        <td class="px-4 py-2">{{ $konsultasi->user->name }}</td>
+                        <td class="px-4 py-2">{{ $konsultasi->user->email }}</td>
+                        <td class="px-4 py-2">{{ $konsultasi->created_at->format('d M Y, H:i') }}</td>
+                        <td class="px-4 py-2">
+                            <a href="{{ url('psikolog/chat/'.$konsultasi->user->id) }}" class="text-blue-600 hover:underline">Lihat Chat</a>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
-        @else
-        <div class="flex justify-center mt-16 text-lg sm:text-xl md:text-2xl dark:text-white text-white">
-            <a href="/listPsikolog" class="hover:underline">Lihat Psikolog Lainnya →</a>
-        </div>
-        @endauth
+        @endif --}}
     </div>
 </section>
+    @endif
+@else
+    {{-- Section untuk guest (belum login) --}}
+    <section id="konsul" class="flex justify-center items-center min-h-screen bg-[#756AB6] px-4 md:px-8">
+        <div class="py-4 w-full max-w-5xl">
+            <div class="text-center mb-6">
+                <h1 class="text-2xl sm:text-3xl font-semibold text-white">Psikolog Terbaik</h1>
+                <h3 class="text-lg sm:text-xl mt-2 text-white">Pilih sesuai kemauanmu!</h3>
+            </div>
+            <div class="grid justify-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-black">
+                @foreach ($psikolog as $index => $item)
+                <div class="card bg-base-100 rounded shadow-xl dark:text-white bg-gray-100 dark:bg-[#432E54] p-3 sm:p-4">
+                    <figure class="px-4 pt-4">
+                        <img
+                            src="{{ Storage::url($item->image) }}"
+                            alt="Psikolog Image"
+                            class="rounded-xl w-full object-cover" />
+                    </figure>
+                    <div class="card-body items-center text-center px-2">
+                        <h2 class="card-title text-md sm:text-lg font-bold mt-2">{{ $item->name }}</h2>
+                        <div class="card-actions mt-4">
+                            <a href="/login" data-require-login="true">
+                                <button class="border-2 font-bold border-blue-500 px-3 py-1 text-[#756AB6] rounded hover:bg-blue-500 hover:text-white dark:border-gray-300 dark:text-white dark:hover:bg-white dark:hover:text-gray-900 transition duration-200">
+                                    Booking Konsultasi
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+            <div class="flex justify-center mt-16 text-lg sm:text-xl md:text-2xl dark:text-white text-white">
+                <a href="/listPsikolog" class="hover:underline">Lihat Psikolog Lainnya →</a>
+            </div>
+        </div>
+    </section>
+@endif
+
 
 
 {{-- User Review --}}
 <section id="reviews" class="min-h-screen py-12 px-4 bg-gray-100 dark:bg-gray-900">
     <div class="max-w-4xl mx-auto">
-        @if(session('success'))
-            <div class="bg-green-500 text-white p-4 rounded-lg mb-6 text-center">
-                {{ session('success') }}
-            </div>
-        @endif
         <!-- Form for Submitting Reviews -->
         @if(Auth::check() && Auth::user()->role == 'user')
             <h2 class="text-3xl font-extrabold text-gray-800 dark:text-white text-center mb-8">
-                User Reviews
+                Berikan Komentar terhadap Website kami
             </h2>
             <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
                 <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-4">
-                    Share Your Experience
+                    Berikan Pengalamanmu
                 </h3>
                 <form method="POST" action="{{ route('reviews.store') }}">
                     @csrf
                     <!-- Rating Section -->
                     <div class="flex items-center mb-6">
-                        <label for="rating" class="text-gray-800 dark:text-gray-200 font-medium mr-4">Rating:</label>
+                        <label for="rating" class="text-gray-800 dark:text-gray-200 font-medium mr-4">Berikan Rating untuk Website kami</label>
                         <div id="rating-group" class="flex space-x-2">
                             @for($i = 1; $i <= 5; $i++)
                                 <button type="button"
@@ -130,16 +191,16 @@
                     </div>
                     <!-- Review Textarea -->
                     <div class="mb-6">
-                        <label for="review" class="block text-gray-800 dark:text-gray-200 font-semibold mb-2">Your Review:</label>
+                        <label for="review" class="block text-gray-800 dark:text-gray-200 font-semibold mb-2">Komentar kamu:</label>
                         <textarea id="review" name="review" rows="4"
                             class="w-full p-4 border border-gray-300 rounded-lg focus:ring focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white resize-none"
-                            placeholder="Write your review here..."></textarea>
+                            placeholder="Berikan Komentar..."></textarea>
                     </div>
                     <!-- Submit Button -->
                     <div class="text-right">
                         <button type="submit"
                             class="bg-blue-600 text-white px-8 py-2 rounded-lg hover:bg-blue-700 transition duration-200">
-                            Submit
+                            Kirim
                         </button>
                     </div>
                 </form>
@@ -149,7 +210,7 @@
         <!-- Reviews List -->
         <div class="mt-12">
             <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-6 text-center">
-                What Others Are Saying
+                Komentar Pengguna
             </h3>
             <div class="space-y-6">
                 @forelse($reviews as $review)
@@ -172,7 +233,7 @@
                     </div>
                 @empty
                     <p class="text-gray-800 dark:text-gray-300 text-center">
-                        No reviews yet. Be the first to share your experience!
+                        Belum ada yang berkomentar. Ayo jadi yang pertama!
                     </p>
                 @endforelse
             </div>
@@ -180,9 +241,9 @@
     </div>
 </section>
 
-<div id="loadingScreen">
+{{-- <div id="loadingScreen">
     <div class="loader"></div>
-</div>
+</div> --}}
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
