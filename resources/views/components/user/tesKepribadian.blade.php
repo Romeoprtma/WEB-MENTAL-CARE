@@ -28,9 +28,9 @@
     </form>
 </section>
 
-<div id="loadingScreen">
+{{-- <div id="loadingScreen">
     <div class="loader"></div>
-</div>
+</div> --}}
 {{-- END SOAL TES --}}
 
 

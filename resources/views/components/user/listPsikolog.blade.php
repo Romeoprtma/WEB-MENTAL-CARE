@@ -9,7 +9,7 @@
     </div>
 
     <div class="max-w-4xl mx-auto space-y-6">
-        @foreach ($psikologs as $index => $item)
+        @foreach ($psikolog as $index => $item)
         <!-- Card 1 -->
         <a href="#" class="block" onclick="openDetail('{{ $item->name }}', 'Psikolog', '{{ $item->deskripsi }}', 'https://via.placeholder.com/150')">
             <div class="bg-white dark:bg-gray-900 text-white p-4 rounded-lg shadow-md flex items-center space-x-4
@@ -27,11 +27,11 @@
                         <h3 class="text-lg font-semibold">{{ $item->name }}</h3>
                     </div>
                     <!-- Deskripsi -->
-                    <p class="text-sm mt-1">{{ $item->deskripsi }}</p>
+                    <p class="text-sm mt-1">{{ $item->role }}</p>
                     <!-- Actions -->
                     <div class="mt-3 flex items-center space-x-2">
                         <!-- Tombol Chat yang Mengarah ke Halaman Chat -->
-                        <a href="{{url(Auth::user()->role.'/chat')}}"
+                        <a href="{{ route('user.chat', ['userId' => $item->id]) }}"
                             class="bg-white text-gray-900 dark:bg-[#756AB6] dark:text-white hover:bg-gray-200 dark:hover:bg-[#5b4a9e] text-xs px-3 py-1 rounded-full transition duration-300">
                             Chat dengan Psikolog
                         </a>
@@ -51,9 +51,6 @@
         @endforeach
     </div>
 </section>
-<div id="loadingScreen">
-    <div class="loader"></div>
-</div>
 
 <!-- detail Overlay -->
 <div id="detail" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">

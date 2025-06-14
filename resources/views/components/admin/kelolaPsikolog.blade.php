@@ -19,12 +19,14 @@
                         <th class="text-center px-6 py-3 font-semibold uppercase tracking-wider">No</th>
                         <th class="text-center px-6 py-3 font-semibold uppercase tracking-wider">Image</th>
                         <th class="text-center px-6 py-3 font-semibold uppercase tracking-wider">Nama</th>
-                        <th class="text-center px-6 py-3 font-semibold uppercase tracking-wider">Deskripsi</th>
+                        <th class="text-center px-6 py-3 font-semibold uppercase tracking-wider">Email</th>
+                        <th class="text-center px-6 py-3 font-semibold uppercase tracking-wider">Alamat</th>
+                        <th class="text-center px-6 py-3 font-semibold uppercase tracking-wider">No Telpon</th>
                         <th class="text-center px-6 py-3 font-semibold uppercase tracking-wider">Action</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                    @foreach ($psikologs as $index => $item)
+                    @foreach ($psikolog as $index => $item)
                     <tr class="hover:bg-gray-100 transition-all">
                         <td class="text-center px-6 py-4 text-gray-700">{{ $index + 1 }}</td>
                         <td class="text-center px-6 py-4 text-gray-700">
@@ -34,8 +36,10 @@
                                 <span>No Image</span>
                             @endif
                         </td>
-                        <td class="text-center px-6 py-4 text-gray-700">{{ $item->name }}</td>
-                        <td class="text-center px-6 py-4 text-gray-700">{{ $item->deskripsi }}</td>
+                        <td class="text-center px-6 py-4 text-gray-700">{{ $item->name ?? 'No Name' }}</td>
+                        <td class="text-center px-6 py-4 text-gray-700">{{ $item->email ?? 'No Email' }}</td>
+                        <td class="text-center px-6 py-4 text-gray-700">{{ $item->address ?? 'No Address' }}</td>
+                        <td class="text-center px-6 py-4 text-gray-700">{{ $item->phone ?? 'No Phone' }}</td>
                         <td class="text-center px-6 py-4 text-gray-700">
                             <div class="flex justify-center items-center gap-3">
                             <a href="{{ route('kelolaPsikolog.edit', $item->id) }}" class="text-blue-500 hover:text-blue-700">

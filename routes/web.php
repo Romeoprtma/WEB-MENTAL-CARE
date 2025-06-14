@@ -8,6 +8,7 @@ use App\Http\Controllers\riviewController;
 use App\Http\Controllers\MeditasiController;
 use App\Http\Controllers\PsikologController;
 use App\Http\Controllers\viewController;
+use App\Livewire\Chat;
 use App\Livewire\UserChart;
 use Illuminate\Support\Facades\Route;
 
@@ -16,6 +17,8 @@ Route::get('/',[viewController::class ,'viewHome']);
 Route::get('/listPsikolog',[viewController::class, 'viewListPsikolog']);
 
 Route::get('/userChart', UserChart::class);
+
+Route::get('/chat', Chat::class);
 
 Route::get('/tesKepribadian', [MBTIController::class, 'mbti'])->name('mbti');
 
@@ -53,10 +56,8 @@ Route::middleware(['auth','user-access:user'])->prefix('user')->group(function()
     Route::get('/profile', [profileController::class, 'viewProfile'])->name('viewProfile');
     Route::put('/profile', [profileController::class, 'updateProfile'])->name('updateProfile');
 
-    Route::get('/chat', [viewController::class,'viewChat']);
+    Route::get('/chat/{userId}', [viewController::class, 'viewChat'])->name('user.chat');
 });
-
-
 
 Route::middleware(['auth','user-access:psikolog'])->prefix('psikolog')->group(function(){
     Route::get('/home',[viewController::class ,'viewHome']);
@@ -65,8 +66,8 @@ Route::middleware(['auth','user-access:psikolog'])->prefix('psikolog')->group(fu
 
     Route::get('/profile', [profileController::class, 'viewProfile'])->name('viewProfile');
     Route::put('/profile', [profileController::class, 'updateProfile'])->name('updateProfile');
-    
-    Route::get('/chat', [viewController::class,'viewChat']);
+
+    Route::get('/chat/{userId}', [viewController::class, 'viewChat'])->name('psikolog.chat');
 });
 
 Route::middleware(['auth','user-access:admin'])->prefix('admin')->group(function(){

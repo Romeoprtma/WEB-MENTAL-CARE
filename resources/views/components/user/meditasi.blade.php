@@ -99,9 +99,9 @@
     </div>
 </section>
 
-<div id="loadingScreen">
+{{-- <div id="loadingScreen">
     <div class="loader"></div>
-</div>
+</div> --}}
 
 <script>
 function togglePlayPause(audioId, iconId, currentTimeId, progressBarId) {
