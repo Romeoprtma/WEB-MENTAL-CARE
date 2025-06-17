@@ -46,7 +46,7 @@ Route::middleware(['auth','user-access:user'])->prefix('user')->group(function()
     Route::post('/home', [riviewController::class, 'store'])->name('reviews.store');
     Route::get('/home',[viewController::class ,'viewHome'])->name('user.home');
 
-    Route::get('/meditasi',[viewController::class, 'viewMeditasi']);
+    Route::get('/meditasi',[viewController::class, 'viewMeditasiUser']);
 
     Route::get('/tesKepribadian', [MBTIController::class, 'mbti'])->name('mbti');
     Route::post('/submit-answers', [MBTIController::class, 'submitAnswers'])->name('submit.answers');
@@ -61,13 +61,13 @@ Route::middleware(['auth','user-access:user'])->prefix('user')->group(function()
 });
 
 Route::middleware(['auth','user-access:psikolog'])->prefix('psikolog')->group(function(){
-    Route::get('/home',[viewController::class ,'viewHome']);
-    Route::get('/meditasi',[viewController::class, 'viewMeditasi']);
-    Route::get('/tesKepribadian', [viewController::class, 'viewTesKepribadian']);
+    Route::get('/home',[viewController::class ,'viewPsikolog']);
+    Route::get('/kelolaMeditasi',[viewController::class, 'viewMeditasi']);
+    Route::get('/kelolaTesKepribadian', [viewController::class, 'viewTesKepribadian']);
 
     Route::get('/profile', [profileController::class, 'viewProfile'])->name('viewProfile');
     Route::put('/profile', [profileController::class, 'updateProfile'])->name('updateProfile');
-
+    Route::get('/riwayatKonseling', [viewController::class, 'viewRiwayatChat']);
     Route::get('/chat/{userId}', [viewController::class, 'viewChat'])->name('psikolog.chat');
 });
 
@@ -79,10 +79,13 @@ Route::middleware(['auth','user-access:admin'])->prefix('admin')->group(function
     Route::resource('kelolaPsikolog', PsikologController::class);
     Route::resource('kelolaMeditasi', MeditasiController::class);
 
+    Route::get('/approveTes', [viewController::class, 'approveTes']);
     // Register Admin
     Route::get('/registerAdmin', [loginController::class, 'showRegisterAdmin'])->name('registerAdmin');
     Route::post('/registerAdmin', [loginController::class, 'registerAdmin']);
 });
+
+
 
 //chatbot
 Route::post('/chatbot', [ChatbotController::class, 'handle']);

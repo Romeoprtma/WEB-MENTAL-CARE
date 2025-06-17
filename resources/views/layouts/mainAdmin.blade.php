@@ -23,6 +23,7 @@
         @yield('kelolaMeditasi')
         @yield('tambahLagu')
         @yield('editLagu')
+        @yield('approveTesKepribadian')
     </div>
     @include('partials.footer')
     @livewireScripts

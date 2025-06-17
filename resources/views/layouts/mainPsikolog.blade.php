@@ -10,15 +10,12 @@
     <title>Mental Care</title>
 </head>
 <body id="hideBody">
-    @include('partials.navbar')
+    @include('partials.navbarPsikolog')
     <div>
-        @yield('home')
-        @yield('meditasi')
-        @yield('tesKepribadian')
-        @yield('listPsikolog')
-        @yield('chat')
-        @yield('profile')
         @yield('dashboardpsikolog')
+        @yield('kelolaMeditasiPsikolog')
+        @yield('kelolaTesKepribadian')
+        @yield('riwayatChat')
     </div>
     @include('partials.footer')
     <script src="{{asset('js/loading.js')}}"></script>
