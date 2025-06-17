@@ -288,4 +288,83 @@
         });
     });
 </script>
+
+<!-- Chatbot Floating Button -->
+<div id="chatbot-container" class="fixed bottom-4 right-4 z-50">
+    <button id="chatbot-toggle" class="bg-white text-[#756AB6] text-xl p-3 rounded-full shadow-xl border border-[#756AB6] hover:bg-[#f0f0f0] focus:outline-none">
+    🗨️
+    </button>
+
+<!-- Chat Window -->
+<div id="chat-window" class="hidden mt-2 w-80 h-[500px] bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden flex flex-col">
+    
+    <!-- Header -->
+    <div class="p-4 border-b bg-[#756AB6] text-white font-bold">MentalCare Bot</div>
+
+    <!-- Messages (harus bisa scroll) -->
+    <div id="chat-messages" class="flex-1 p-4 overflow-y-auto space-y-3 bg-gray-100 dark:bg-gray-700 text-sm">
+        <!-- pesan muncul di sini -->
+    </div>
+
+    <!-- Input -->
+    <form id="chat-form" class="flex border-t bg-white dark:bg-gray-800">
+        <input type="text" name="message" id="chat-input" placeholder="Tulis pesan..."
+            class="flex-1 p-3 text-sm focus:outline-none text-gray-800 dark:text-white dark:bg-gray-700"
+            autocomplete="off" />
+        <button type="submit" class="bg-[#756AB6] text-white px-4">Kirim</button>
+    </form>
+</div>
+</div>
+
+<script>
+document.getElementById('chatbot-toggle').addEventListener('click', () => {
+    document.getElementById('chat-window').classList.toggle('hidden');
+});
+
+document.getElementById('chat-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const input = document.getElementById('chat-input');
+    const message = input.value.trim();
+    if (!message) return;
+
+    appendMessage('Kamu', message);
+
+    const response = await fetch('/chatbot', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+        },
+        body: JSON.stringify({ message })
+    });
+
+    const data = await response.json();
+    appendMessage('MentalCare Bot', data.reply);
+    input.value = '';
+});
+
+function appendMessage(sender, message) {
+    const msgContainer = document.getElementById('chat-messages');
+    const bubble = document.createElement('div');
+
+    bubble.classList.add(
+        'max-w-[80%]', 'px-4', 'py-2', 'rounded-lg', 'shadow',
+        'whitespace-pre-line', 'text-sm', 'break-words'
+    );
+
+    if (sender === 'Kamu') {
+        // Warna biru muda terang
+        bubble.classList.add('bg-blue-600', 'text-white', 'ml-auto', 'text-right');
+    } else {
+        // Warna abu gelap yang jelas
+        bubble.classList.add('bg-white', 'text-gray-800', 'mr-auto', 'text-left', 'dark:bg-gray-600', 'dark:text-white');
+    }
+
+    bubble.innerHTML = `<strong>${sender}:</strong><br>${message}`;
+    msgContainer.appendChild(bubble);
+    msgContainer.scrollTop = msgContainer.scrollHeight;
+}
+</script>
+
 @endsection
+

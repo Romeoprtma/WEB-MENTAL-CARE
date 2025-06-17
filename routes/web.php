@@ -8,6 +8,7 @@ use App\Http\Controllers\riviewController;
 use App\Http\Controllers\MeditasiController;
 use App\Http\Controllers\PsikologController;
 use App\Http\Controllers\viewController;
+use App\Http\Controllers\ChatbotController;
 use App\Livewire\Chat;
 use App\Livewire\UserChart;
 use Illuminate\Support\Facades\Route;
@@ -82,3 +83,6 @@ Route::middleware(['auth','user-access:admin'])->prefix('admin')->group(function
     Route::get('/registerAdmin', [loginController::class, 'showRegisterAdmin'])->name('registerAdmin');
     Route::post('/registerAdmin', [loginController::class, 'registerAdmin']);
 });
+
+//chatbot
+Route::post('/chatbot', [ChatbotController::class, 'handle']);
