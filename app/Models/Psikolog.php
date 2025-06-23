@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Psikolog extends Model
 {
     // Tabel yang terkait dengan model
-    protected $table = 'table_psikolog';
+    protected $table = 'psikolog';
 
     // Kolom yang bisa diisi (fillable)
     protected $fillable = [
@@ -19,7 +19,7 @@ class Psikolog extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
 }

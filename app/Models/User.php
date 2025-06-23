@@ -45,4 +45,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function psikolog()
+    {
+        return $this->hasOne(Psikolog::class, 'user_id');
+    }
 }
