@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Meditasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class MeditasiController extends Controller
 {
@@ -13,6 +14,13 @@ class MeditasiController extends Controller
      */
     public function index()
     {
+        // Untuk psikolog, tampilkan hanya meditasi yang dibuat olehnya
+        if (Auth::user()->role === 'psikolog') {
+            $songs = Meditasi::where('created_by', Auth::id())->get();
+            return view('components.psikolog.meditasi.index', compact('songs'));
+        }
+        
+        // Untuk admin, tampilkan semua meditasi
         $songs = Meditasi::all();
         return view('components.admin.meditasi.kelolaMeditasi', compact('songs'));
     }
@@ -22,6 +30,9 @@ class MeditasiController extends Controller
      */
     public function create()
     {
+        if (Auth::user()->role === 'psikolog') {
+            return view('components.psikolog.meditasi.create');
+        }
         return view('components.admin.meditasi.tambahLagu');
     }
 
@@ -31,24 +42,30 @@ class MeditasiController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required',
-            'duration' => 'required',
-            'audio_file' => 'required|mimes:mp3,wav|max:15240', // Pastikan format dan ukuran file benar
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'duration' => 'required|integer|min:1',
+            'category' => 'required|string|in:pemula,menengah,lanjutan',
+            'audio_file' => 'required|mimes:mp3,wav,m4a|max:51200', // Max 50MB
         ]);
 
-        // Menyimpan file audio
+        $audioPath = null;
         if ($request->hasFile('audio_file')) {
-            $audioPath = $request->file('audio_file')->store('audio_files', 'public');
+            $audioPath = $request->file('audio_file')->store('meditasi/audio', 'public');
         }
 
-        // Menyimpan data lagu ke database
         Meditasi::create([
             'title' => $request->title,
+            'description' => $request->description,
             'duration' => $request->duration,
-            'audio_file' => $audioPath ?? '',
+            'category' => $request->category,
+            'audio_file' => $audioPath,
+            'created_by' => Auth::id(),
+            'status' => 'active'
         ]);
 
-        return redirect()->route('kelolaMeditasi.index')->with('success', 'Lagu berhasil ditambahkan.');
+        $redirectRoute = Auth::user()->role === 'psikolog' ? 'psikolog.meditasi.index' : 'kelolaMeditasi.index';
+        return redirect()->route($redirectRoute)->with('success', 'Meditasi berhasil ditambahkan.');
     }
 
     /**
@@ -56,58 +73,110 @@ class MeditasiController extends Controller
      */
     public function show(Meditasi $meditasi)
     {
-        //
+        return view('components.meditasi.show', compact('meditasi'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Meditasi $kelolaMeditasi)
+    public function edit(Meditasi $meditasi)
     {
-        return view('components.admin.meditasi.editLagu', compact('kelolaMeditasi'));
+        // Pastikan psikolog hanya bisa edit meditasi mereka sendiri
+        if (Auth::user()->role === 'psikolog' && $meditasi->created_by !== Auth::id()) {
+            abort(403, 'Unauthorized');
+        }
+
+        if (Auth::user()->role === 'psikolog') {
+            return view('components.psikolog.meditasi.edit', compact('meditasi'));
+        }
+        
+        return view('components.admin.meditasi.editLagu', ['kelolaMeditasi' => $meditasi]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Meditasi $kelolaMeditasi)
+    public function update(Request $request, Meditasi $meditasi)
     {
-        $request->validate([
-            'title' => 'required',
-            'duration' => 'required',
-            'audio_file' => 'mimes:mp3,wav|max:15240', // Jika ada file baru
-        ]);
-
-        // Update file audio jika ada
-        if ($request->hasFile('audio_file')) {
-            if ($kelolaMeditasi->audio_file) {
-                Storage::disk('public')->delete($kelolaMeditasi->audio_file);
-            }
-            $kelolaMeditasi->image = $request->file('audio_file')->store('audio_files', 'public');
+        // Pastikan psikolog hanya bisa update meditasi mereka sendiri
+        if (Auth::user()->role === 'psikolog' && $meditasi->created_by !== Auth::id()) {
+            abort(403, 'Unauthorized');
         }
 
-
-        $kelolaMeditasi->update([
-            'title' => $request->title,
-            'duration' => $request->duration,
-            'audio_file' => $kelolaMeditasi->audio_file ?? $kelolaMeditasi->audio_file,
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'duration' => 'required|integer|min:1',
+            'category' => 'required|string|in:pemula,menengah,lanjutan',
+            'audio_file' => 'nullable|mimes:mp3,wav,m4a|max:51200', // Max 50MB
         ]);
 
-        return redirect()->route('kelolaMeditasi.index')->with('success', 'Lagu berhasil diperbarui.');
+        // Update file audio jika ada file baru
+        if ($request->hasFile('audio_file')) {
+            // Hapus file lama
+            if ($meditasi->audio_file) {
+                Storage::disk('public')->delete($meditasi->audio_file);
+            }
+            // Simpan file baru
+            $meditasi->audio_file = $request->file('audio_file')->store('meditasi/audio', 'public');
+        }
+
+        $meditasi->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'duration' => $request->duration,
+            'category' => $request->category,
+            'audio_file' => $meditasi->audio_file,
+        ]);
+
+        $redirectRoute = Auth::user()->role === 'psikolog' ? 'psikolog.meditasi.index' : 'kelolaMeditasi.index';
+        return redirect()->route($redirectRoute)->with('success', 'Meditasi berhasil diperbarui.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Meditasi $meditasi, $id)
+    public function destroy(Meditasi $meditasi)
     {
-        $meditasi = Meditasi::findOrFail($id);
+        // Pastikan psikolog hanya bisa hapus meditasi mereka sendiri
+        if (Auth::user()->role === 'psikolog' && $meditasi->created_by !== Auth::id()) {
+            abort(403, 'Unauthorized');
+        }
+
+        // Hapus file audio
         if ($meditasi->audio_file) {
             Storage::disk('public')->delete($meditasi->audio_file);
         }
 
         $meditasi->delete();
 
-        return redirect()->route('kelolaMeditasi.index')->with('success', 'Psikolog berhasil dihapus!');
+        $redirectRoute = Auth::user()->role === 'psikolog' ? 'psikolog.meditasi.index' : 'kelolaMeditasi.index';
+        return redirect()->route($redirectRoute)->with('success', 'Meditasi berhasil dihapus!');
     }
+
+    public function userMeditasi()
+    {
+        $songs = Meditasi::all();
+        return view('meditasi', compact('songs'));
+    }
+
+    public function meditasi()
+    {
+    $songs = [
+        [
+            'title' => 'St. Chroma (feat. Daniel Caesar)',
+            'file' => 'audio/musik1.mp3',
+            'duration' => '3:17',
+        ],
+        [
+            'title' => 'Katawaredoki',
+            'file' => 'audio/musik2.mp3',
+            'duration' => '2:50',
+        ],
+        // Tambahkan lagu lain di sini jika ada
+    ];
+
+    return view('meditasi', compact('songs'));
+    }
+
 }
