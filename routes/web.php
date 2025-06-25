@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\MBTIController;
 use App\Http\Controllers\loginController;
 use App\Http\Controllers\profileController;
@@ -61,6 +62,7 @@ Route::middleware(['auth','user-access:user'])->prefix('user')->group(function()
 });
 
 Route::middleware(['auth','user-access:psikolog'])->prefix('psikolog')->group(function(){
+
     Route::get('/home',[viewController::class ,'viewPsikolog']);
     Route::get('/kelolaMeditasi',[viewController::class, 'viewMeditasi']);
     Route::get('/kelolaTesKepribadian', [viewController::class, 'viewTesKepribadian']);
@@ -68,6 +70,22 @@ Route::middleware(['auth','user-access:psikolog'])->prefix('psikolog')->group(fu
     Route::get('/profile', [profileController::class, 'viewProfile'])->name('viewProfile');
     Route::put('/profile', [profileController::class, 'updateProfile'])->name('updateProfile');
     Route::get('/riwayatKonseling', [viewController::class, 'viewRiwayatChat']);
+
+    Route::resource('home', PsikologController::class);
+    Route::get('/home/edit/{user}',[PsikologController::class ,'edit'])->name('psikolog.edit');
+    Route::put('/home/update/{user}',[PsikologController::class ,'update'])->name('psikolog.update');
+
+    Route::get('/kelolaTesKepribadian', [viewController::class, 'viewTesKepribadian']);
+
+    // kelola meditasi
+    Route::resource('kelolaMeditasiPsikolog', MeditasiController::class);
+    Route::delete('/meditasi/{meditasi}', [MeditasiController::class, 'destroy'])->name('kelolaMeditasiPsikolog.destroy');
+    Route::get('/kelolaMeditasiPsikolog/edit/{meditasi}', [MeditasiController::class, 'edit'])->name('kelolaMeditasiPsikolog.edit');
+    Route::put('/kelolaMeditasiPsikolog/update/{meditasi}', [MeditasiController::class, 'update'])->name('kelolaMeditasiPsikolog.update');
+
+    // riwayat konseling
+    Route::get('/riwayatKonseling', [ChatController::class, 'index']);
+
     Route::get('/chat/{userId}', [viewController::class, 'viewChat'])->name('psikolog.chat');
 });
 
@@ -89,3 +107,7 @@ Route::middleware(['auth','user-access:admin'])->prefix('admin')->group(function
 
 //chatbot
 Route::post('/chatbot', [ChatbotController::class, 'handle']);
+
+
+Route::get('/meditasi', [MeditasiController::class, 'meditasi']);
+

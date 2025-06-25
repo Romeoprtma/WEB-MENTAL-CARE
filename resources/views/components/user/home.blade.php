@@ -2,43 +2,54 @@
 @section('home')
 
 {{-- Home --}}
-<section class="flex flex-col lg:flex-row justify-between items-center bg-[#756AB6] px-4 lg:px-20 h-auto lg:h-[668px] py-10 lg:py-0">
+<section class="flex flex-col lg:flex-row justify-between items-center bg-[#756AB6] px-4 lg:px-24 py-16 lg:py-20">
     <!-- Text Section -->
-    <div class="title-hero text-center lg:text-left text-white mb-6 lg:mb-0 lg:ml-20">
-        <h1 class="text-[42px] font-bold">MentalCare</h1>
-        <h3 class="py-2 max-w-[500px] mr-[54px]">Temukan solusi kesehatan mental terintegrasi di satu platform. Nikmati meditasi dengan musik menenangkan, tes kepribadian, video edukasi, hingga konsultasi langsung dengan ahli. Bersama kami, jadikan kesejahteraan mentalmu prioritas utama.</h3>
+    <div class="lg:w-1/2 text-white text-center lg:text-left mb-10 lg:mb-0">
+        <h1 class="text-4xl md:text-5xl font-extrabold mb-4">MentalCare</h1>
+        <p class="text-lg leading-relaxed max-w-xl mx-auto lg:mx-0">
+            Temukan solusi kesehatan mental terintegrasi di satu platform. Nikmati meditasi dengan musik menenangkan,
+            tes kepribadian, video edukasi, hingga konsultasi langsung dengan ahli. Bersama kami, jadikan kesejahteraan
+            mentalmu prioritas utama.
+        </p>
     </div>
     <!-- Image Section -->
-    <div class="img-hero flex justify-center lg:justify-end w-full lg:w-auto">
-        <img src="{{asset('/img/icon_hero.svg')}}" class="w-64 h-64 md:w-80 md:h-80 lg:w-[481px] lg:h-[469px]" alt="Icon Hero">
+    <div class="lg:w-1/2 flex justify-center lg:justify-end">
+        <img src="{{ asset('/img/icon_hero.svg') }}" alt="Icon Hero" class="w-72 md:w-96 lg:w-[481px] lg:h-[469px]" />
     </div>
 </section>
+
 {{-- About --}}
-<section id="about" class="flex flex-col bg-white lg:flex-row justify-center items-center px-4 md:px-10 lg:px-20 min-h-screen dark:bg-gray-900 w-full">
-    <div class="mt-6 lg:mt-0 w-full lg:w-1/2 flex justify-center lg:justify-end pr-40">
-        <img src="{{asset('/img/icon_about.png')}}" class="w-48 h-48 md:w-64 md:h-64 lg:w-[481px] lg:h-[469px]" alt="Icon About">
-    </div>
-    <div class="mt-10 lg:mt-0 lg:ml-10 w-full lg:w-1/2 text-center lg:text-left px-4 lg:px-0">
-        <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 dark:text-white">Tentang Kami</h1>
-        <p class="text-justify mt-4 md:mt-6 lg:mt-8 text-gray-700 dark:text-gray-300">
-            Mental Care adalah platform kesehatan mental yang menyediakan fitur meditasi lewat musik, tes kepribadian, video edukasi, dan konsultasi. Melalui layanan ini, pengguna dapat menenangkan pikiran, memahami diri lebih baik, serta mendapatkan edukasi dan dukungan profesional untuk menjaga kesehatan mental.
-        </p>
-        <div class="flex flex-col sm:flex-row justify-center lg:justify-start items-center gap-4 mt-6 text-gray-700 dark:text-gray-300">
-            <div class="flex items-center space-x-2">
-                <img src="{{asset('/img/instagram.png')}}" alt="Instagram" class="w-6 h-6">
-                <h2>Instagram</h2>
+<section id="about" class="bg-white dark:bg-gray-900 px-4 md:px-10 lg:px-24 py-16">
+    <div class="flex flex-col-reverse lg:flex-row items-center gap-12">
+        <div class="lg:w-1/2 text-center lg:text-left">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white mb-6">Tentang Kami</h2>
+            <p class="text-gray-700 dark:text-gray-300 text-justify">
+                Mental Care adalah platform kesehatan mental yang menyediakan fitur meditasi lewat musik, tes kepribadian,
+                video edukasi, dan konsultasi. Melalui layanan ini, pengguna dapat menenangkan pikiran, memahami diri lebih baik,
+                serta mendapatkan edukasi dan dukungan profesional untuk menjaga kesehatan mental.
+            </p>
+            <div class="flex flex-wrap justify-center lg:justify-start gap-4 mt-6 text-gray-700 dark:text-gray-300">
+                <div class="flex items-center space-x-2">
+                    <img src="{{ asset('/img/instagram.png') }}" alt="Instagram" class="w-6 h-6">
+                    <span>Instagram</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <img src="{{ asset('/img/wa.png') }}" alt="WhatsApp" class="w-6 h-6">
+                    <span>WhatsApp</span>
+                </div>
             </div>
-            <div class="flex items-center space-x-2">
-                <img src="{{asset('/img/wa.png')}}" alt="WhatsApp" class="w-6 h-6">
-                <h2>WhatsApp</h2>
+            <div class="mt-8">
+                <a href="#konsul">
+                    <button
+                        class="bg-transparent border-2 border-blue-600 text-blue-600 dark:border-white dark:text-white px-6 py-2 rounded-lg hover:bg-blue-600 hover:text-white dark:hover:bg-white dark:hover:text-gray-900 transition duration-200">
+                        Temukan Psikolog Terbaik
+                    </button>
+                </a>
             </div>
         </div>
-        <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 items-center mt-8 text-lg font-semibold">
-            <a href="#konsul" class="w-full sm:w-auto">
-                <button class="w-full sm:w-auto border-2 border-blue-600 text-blue-600 px-6 py-2 rounded hover:bg-blue-600 hover:text-white dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-gray-900 transition duration-200">
-                    Temukan Psikolog Terbaik
-                </button>
-            </a>
+        <div class="lg:w-1/2 flex justify-center">
+            <img src="{{ asset('/img/icon_about.png') }}" alt="Icon About"
+                class="w-48 md:w-64 lg:w-[481px] lg:h-[469px]" />
         </div>
     </div>
 </section>
@@ -329,6 +340,32 @@ document.getElementById('chat-form').addEventListener('submit', async (e) => {
 
     appendMessage('Kamu', message);
 
+    appendLoading();
+
+    try {
+        const response = await fetch('/chatbot', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            },
+            body: JSON.stringify({ message })
+        });
+
+        const data = await response.json();
+        removeLoading();
+        appendMessage('MentalCare Bot', data.reply);
+    } catch (error) {
+        removeLoading();
+        appendMessage('MentalCare Bot', 'Maaf, terjadi kesalahan saat menghubungi server. Silakan coba lagi nanti.');
+    }
+
+    input.value = '';
+});
+
+// Menambahkan pesan
+
+
     const response = await fetch('/chatbot', {
         method: 'POST',
         headers: {
@@ -343,6 +380,7 @@ document.getElementById('chat-form').addEventListener('submit', async (e) => {
     input.value = '';
 });
 
+
 function appendMessage(sender, message) {
     const msgContainer = document.getElementById('chat-messages');
     const bubble = document.createElement('div');
@@ -353,10 +391,15 @@ function appendMessage(sender, message) {
     );
 
     if (sender === 'Kamu') {
+
+        bubble.classList.add('bg-blue-600', 'text-white', 'ml-auto', 'text-right');
+    } else {
+
         // Warna biru muda terang
         bubble.classList.add('bg-blue-600', 'text-white', 'ml-auto', 'text-right');
     } else {
         // Warna abu gelap yang jelas
+
         bubble.classList.add('bg-white', 'text-gray-800', 'mr-auto', 'text-left', 'dark:bg-gray-600', 'dark:text-white');
     }
 
@@ -364,7 +407,33 @@ function appendMessage(sender, message) {
     msgContainer.appendChild(bubble);
     msgContainer.scrollTop = msgContainer.scrollHeight;
 }
+
+
+// Tambahkan indikator loading sementara
+function appendLoading() {
+    const msgContainer = document.getElementById('chat-messages');
+    const loadingBubble = document.createElement('div');
+    loadingBubble.id = 'loading-indicator';
+    loadingBubble.classList.add('text-sm', 'text-gray-500', 'italic', 'mr-auto');
+    loadingBubble.textContent = 'MentalCare Bot sedang mengetik...';
+    msgContainer.appendChild(loadingBubble);
+    msgContainer.scrollTop = msgContainer.scrollHeight;
+}
+
+// Hapus indikator loading
+function removeLoading() {
+    const loadingBubble = document.getElementById('loading-indicator');
+    if (loadingBubble) {
+        loadingBubble.remove();
+    }
+}
+</script>
+
+
+@endsection
+
 </script>
 
 @endsection
+
 

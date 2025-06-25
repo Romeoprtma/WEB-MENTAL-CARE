@@ -9,9 +9,32 @@ class Meditasi extends Model
 {
     use HasFactory;
 
+    protected $table = 'meditasi';
+
     protected $fillable = [
         'title',
+        'description',
+        'category',
+        'audio_file',
         'duration',
-        'audio_file'
+        'created_by',
+        'approved_by',
+        'is_approved',
+        'status',
     ];
+
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function approver()
+    {
+        return $this->belongsTo(User::class, 'approved_by');
+    }
+
+    public function getFormattedDurationAttribute()
+    {
+        return gmdate("i:s", $this->duration);
+    }
 }

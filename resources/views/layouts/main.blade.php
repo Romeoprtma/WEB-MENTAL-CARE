@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com"></script>
+
     <title>Mental Care</title>
 </head>
 <body id="hideBody">
@@ -21,6 +22,7 @@
         @yield('dashboardpsikolog')
     </div>
     @include('partials.footer')
-    <script src="{{asset('js/loading.js')}}"></script>
+    {{-- <script src="{{asset('js/loading.js')}}"></script> --}}
+    <script src="{{asset('js/script.js')}}"></script>
 </body>
 </html>
