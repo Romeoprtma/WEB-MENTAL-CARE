@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::drop('table_psikolog');
+        Schema::drop('meditasis');
     }
 
     /**

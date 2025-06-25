@@ -339,6 +339,7 @@ document.getElementById('chat-form').addEventListener('submit', async (e) => {
     if (!message) return;
 
     appendMessage('Kamu', message);
+
     appendLoading();
 
     try {
@@ -363,6 +364,23 @@ document.getElementById('chat-form').addEventListener('submit', async (e) => {
 });
 
 // Menambahkan pesan
+
+
+    const response = await fetch('/chatbot', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+        },
+        body: JSON.stringify({ message })
+    });
+
+    const data = await response.json();
+    appendMessage('MentalCare Bot', data.reply);
+    input.value = '';
+});
+
+
 function appendMessage(sender, message) {
     const msgContainer = document.getElementById('chat-messages');
     const bubble = document.createElement('div');
@@ -373,8 +391,15 @@ function appendMessage(sender, message) {
     );
 
     if (sender === 'Kamu') {
+
         bubble.classList.add('bg-blue-600', 'text-white', 'ml-auto', 'text-right');
     } else {
+
+        // Warna biru muda terang
+        bubble.classList.add('bg-blue-600', 'text-white', 'ml-auto', 'text-right');
+    } else {
+        // Warna abu gelap yang jelas
+
         bubble.classList.add('bg-white', 'text-gray-800', 'mr-auto', 'text-left', 'dark:bg-gray-600', 'dark:text-white');
     }
 
@@ -382,6 +407,7 @@ function appendMessage(sender, message) {
     msgContainer.appendChild(bubble);
     msgContainer.scrollTop = msgContainer.scrollHeight;
 }
+
 
 // Tambahkan indikator loading sementara
 function appendLoading() {
@@ -405,3 +431,9 @@ function removeLoading() {
 
 
 @endsection
+
+</script>
+
+@endsection
+
+

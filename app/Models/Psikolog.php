@@ -11,8 +11,15 @@ class Psikolog extends Model
 
     // Kolom yang bisa diisi (fillable)
     protected $fillable = [
-        'name',
-        'deskripsi',
-        'image',
+        'user_id',
+        'pengalaman',
+        'spesialis',
+        'jadwal_konseling',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
 }
