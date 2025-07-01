@@ -49,6 +49,9 @@
                 </td>
                 <td class="px-14 py-4 text-center font-medium text-gray-900">{{$item->status}}</td>
                 <td class="px-14 py-4 flex justify-center gap-2">
+                    @if($item->is_approved)
+                        <span class="text-green-600 font-semibold">Disetujui</span>
+                    @else
                     <form action="{{route('kelolaMeditasiPsikolog.edit', $item->id)}}">
                         <button class="inline-flex items-center px-3 py-1 bg-indigo-100 text-indigo-700 rounded hover:bg-indigo-200 transition text-xs font-medium">
                             <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -67,6 +70,7 @@
                             Hapus
                         </button>
                     </form>
+                    @endif
                 </td>
             </tr>
             @endforeach

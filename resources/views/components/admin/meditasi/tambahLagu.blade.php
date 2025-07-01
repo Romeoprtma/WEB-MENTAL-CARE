@@ -15,15 +15,19 @@
                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                 @enderror
 
-                <div>
-                    <label class="block text-sm font-medium text-gray-700" for="duration">Duration</label>
-                    <input class="p-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" type="text" name="duration" id="duration" required>
+                <div class="mb-5">
+                    <label for="description" class="block text-sm font-medium text-gray-700">Deskripsi</label>
+                    <textarea name="description" id="description" rows="4" class="p-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required></textarea>
                 </div>
-
-                @error('duration')
-                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                @enderror
-
+                <div class="mb-5">
+                    <label for="category" class="block text-sm font-medium text-gray-700">Kategori</label>
+                    <select name="category" id="category" class="p-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+                        <option value="" hidden selected>Pilih Kategori</option>
+                        <option value="relaksasi">Relaksasi</option>
+                        <option value="tidur">Tidur</option>
+                        <option value="fokus">Fokus</option>
+                    </select>
+                </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700" for="audio_file">Audio File</label>
                     <input class="p-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" type="file" name="audio_file" id="audio_file" required>

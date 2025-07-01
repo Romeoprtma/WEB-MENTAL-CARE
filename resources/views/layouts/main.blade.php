@@ -20,6 +20,7 @@
         @yield('chat')
         @yield('profile')
         @yield('dashboardpsikolog')
+        @yield('hasilTes')
     </div>
     @include('partials.footer')
     {{-- <script src="{{asset('js/loading.js')}}"></script> --}}

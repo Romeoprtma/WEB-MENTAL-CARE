@@ -10,15 +10,23 @@
             {{-- Avatar --}}
             <img src="https://ui-avatars.com/api/?name={{ urlencode($user->name) }}&background=4f46e5&color=fff"
                 class="w-12 h-12 rounded-full" alt="avatar">
-
             {{-- User Info --}}
             <div class="flex-1">
                 <div class="flex justify-between items-center">
                     <h2 class="text-md font-semibold text-gray-900">{{ $user->name }}</h2>
-                    {{-- Bisa tambahkan timestamp pesan terakhir --}}
+                    @if($user->lastMessage)
+                        <span class="text-xs text-gray-500">
+                            {{ \Carbon\Carbon::parse($user->lastMessage->created_at)->diffForHumans() }}
+                        </span>
+                    @endif
                 </div>
+
                 <p class="text-gray-600 text-sm">{{ $user->email }}</p>
-                <span class="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-800">{{ ucfirst($user->role) }}</span>
+
+                {{-- Last message --}}
+                <span class="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-800 inline-block mt-1">
+                    {{ $user->lastMessage ? Str::limit($user->lastMessage->message, 30) : 'Belum ada pesan' }}
+                </span>
             </div>
         </div>
     </a>

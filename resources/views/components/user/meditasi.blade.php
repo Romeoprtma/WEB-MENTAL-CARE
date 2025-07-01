@@ -18,75 +18,55 @@
 <section class="flex justify-center items-center bg-white min-h-screen p-4">
     <div class="bg-white text-black p-8 rounded-lg shadow-lg text-center w-full max-w-[100%]">
         <h1 class="text-4xl text-left font-bold mb-6">Music</h1>
-
         <!-- Playlist Table -->
         <table class="w-full text-left bg-white rounded-lg shadow-md">
             <thead>
                 <tr class="bg-[#756AB6] text-white">
                     <th class="p-4">No</th>
-                    <th class="p-4">Song</th>
-                    <th class="p-4">Duration</th>
+                    <th class="p-4">Judul</th>
+                    <th class="p-4">Durasi</th>
+                    <th class="p-4">Deskripsi</th>
                     <th class="p-4">Play</th>
                 </tr>
             </thead>
             <tbody>
-
-                @foreach($songs as $index => $songs)
-
-                @foreach ($meditasi as $index => $item)
-                <!-- Song Item 1 -->
-
-                <tr class="text-black hover:bg-gray-100 transition duration-200">
-                    <td class="p-4">{{ $index + 1 }}</td>
-                    <td class="p-4">{{ $song->title }}</td>
-                    <td class="p-4">{{ $song->duration }}</td>
-                    <td class="p-4">
-
-                        <audio id="audio{{ $index }}" src="{{ asset('storage/' . $song->audio_file) }}" class="hidden"></audio>
-
-                        {{ $index + 1 }}
-                    </td>
-                    <td class="p-4">{{ $item->title }}</td>
-                    <td class="p-4">{{ $item->formatted_duration }}</td>
-                    <td class="p-4">
-                        <audio id="audio1" src="{{ asset('storage/' . $item->audio_file) }}" class="hidden"></audio>
-
-                        <button
-                            onclick="togglePlayPause('audio{{ $index }}', 'playPauseIcon{{ $index }}', 'currentTime{{ $index }}', 'progressBar{{ $index }}')"
-                            class="bg-[#1DB954] hover:bg-[#1ed760] text-white font-semibold py-2 px-4 rounded-full">
-                            <span id="playPauseIcon{{ $index }}">
-                                <!-- Play Icon -->
-
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M14.752 11.168l-6.5-3.75A1 1 0 007 8.25v7.5a1 1 0 001.252.928l6.5-3.75a1 1 0 000-1.856z"/>
-
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-6.5-3.75A1 1 0 007 8.25v7.5a1 1 0 001.252.928l6.5-3.75a1 1 0 000-1.856z" />
-
-                                </svg>
-                            </span>
-                        </button>
-                    </td>
-                </tr>
-
-                <tr class="hover:bg-gray-100 transition duration-200">
-                    <td colspan="4" class="p-4">
-                        <div class="relative w-full mt-2">
-                            <span id="currentTime{{ $index }}"
-                                class="absolute left-0 bottom-[-1.5rem] text-sm text-gray-600">0:00</span>
-
-                <tr class="hover:bg-gray-100 transition duration-200 ">
-                    <td colspan="4" class="p-4">
-                        <div class="relative w-full mt-2">
-
-                            <div class="w-full bg-gray-200 h-2 rounded-full">
-                                <div id="progressBar{{ $index }}" class="h-2 bg-[#756AB6] rounded-full" style="width: 0%;"></div>
+                @foreach ($songs as $index => $item)
+                @if ($item->is_approved)
+                    <tr class="text-black hover:bg-gray-100 transition duration-200">
+                        <td class="p-4">{{ $index + 1 }}</td>
+                        <td class="p-4">{{ $item->title }}</td>
+                        <td class="p-4">{{ $item->formatted_duration }}</td>
+                        <td class="p-4">{{ $item->description }}</td>
+                        <td class="p-4">
+                            <audio id="audio{{ $index }}" src="{{ asset('storage/' . $item->audio_file) }}" class="hidden"></audio>
+                            <button
+                                onclick="togglePlayPause('audio{{ $index }}', 'playPauseIcon{{ $index }}', 'currentTime{{ $index }}', 'progressBar{{ $index }}')"
+                                class="bg-[#1DB954] hover:bg-[#1ed760] text-white font-semibold py-2 px-4 rounded-full">
+                                <span id="playPauseIcon{{ $index }}">
+                                    <!-- Play Icon -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M14.752 11.168l-6.5-3.75A1 1 0 007 8.25v7.5a1 1 0 001.252.928l6.5-3.75a1 1 0 000-1.856z"/>
+                                    </svg>
+                                </span>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr class="hover:bg-gray-100 transition duration-200">
+                        <td colspan="5" class="p-4">
+                            <div class="relative w-full mt-2">
+                                <div class="w-full bg-gray-200 h-2 rounded-full">
+                                    <div id="progressBar{{ $index }}" class="h-2 bg-[#756AB6] rounded-full" style="width: 0%;"></div>
+                                </div>
+                                <div class="flex justify-between text-xs text-gray-500 mt-1">
+                                    <span id="currentTime{{ $index }}">0:00</span>
+                                    <span>{{ $item->formatted_duration }}</span>
+                                </div>
                             </div>
-                        </div>
-                    </td>
-                </tr>
+                        </td>
+                    </tr>
+                @endif
                 @endforeach
             </tbody>
         </table>

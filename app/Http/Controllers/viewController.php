@@ -6,7 +6,6 @@ use App\Models\Meditasi;
 use App\Models\Psikolog;
 use App\Models\Review;
 use App\Models\User;
-use App\Models\Meditasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,10 +17,10 @@ class viewController extends Controller
 
     public function viewRiwayatChat(){
         $user = User::whereIn('role', ['user'])->get();
-        return view('components.psikolog.riwayatchat', compact('user'));
+        return view('components.psikolog.chat.riwayatChat', compact('user'));
     }
     public function viewPsikolog(){
-        return view('components.psikolog.dashboardpsikolog');
+        return view('components.psikolog.profile.dashboardPsikolog');
     }
 
     public function viewHome(){
@@ -34,8 +33,6 @@ class viewController extends Controller
         $songs = Meditasi::all();
         return view('components.user.meditasi', compact('songs'));
     }
-
-
     public function viewDashboardAdmin(){
         return view('components.admin.dashboardAdmin');
     }
@@ -53,14 +50,6 @@ class viewController extends Controller
     public function viewTesKepribadian(){
         return view('components.psikolog.kelolaTesKepribadian');
     }
-    public function viewMeditasiUser(){
-
-        return view('components.user.meditasi'); 
-    }
 }
 
-        $meditasi=Meditasi::get();
-        return view('components.user.meditasi', compact('meditasi'));
-    }
-}
 

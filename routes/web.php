@@ -10,6 +10,8 @@ use App\Http\Controllers\MeditasiController;
 use App\Http\Controllers\PsikologController;
 use App\Http\Controllers\viewController;
 use App\Http\Controllers\ChatbotController;
+use App\Http\Controllers\SoalKepribadianController;
+use App\Imports\SoalKepribadianImport;
 use App\Livewire\Chat;
 use App\Livewire\UserChart;
 use Illuminate\Support\Facades\Route;
@@ -47,9 +49,11 @@ Route::middleware(['auth','user-access:user'])->prefix('user')->group(function()
     Route::post('/home', [riviewController::class, 'store'])->name('reviews.store');
     Route::get('/home',[viewController::class ,'viewHome'])->name('user.home');
 
-    Route::get('/meditasi',[viewController::class, 'viewMeditasiUser']);
+    Route::get('/meditasi',[viewController::class, 'viewMeditasi']);
 
-    Route::get('/tesKepribadian', [MBTIController::class, 'mbti'])->name('mbti');
+    Route::get('/tesKepribadian', [SoalKepribadianController::class, 'index'])->name('tes.index');
+    Route::post('/tesKepribadian', [SoalKepribadianController::class, 'submit'])->name('tes.submit');
+
     Route::post('/submit-answers', [MBTIController::class, 'submitAnswers'])->name('submit.answers');
 
     Route::get('/listPsikolog',[viewController::class, 'viewListPsikolog']);
@@ -62,20 +66,12 @@ Route::middleware(['auth','user-access:user'])->prefix('user')->group(function()
 });
 
 Route::middleware(['auth','user-access:psikolog'])->prefix('psikolog')->group(function(){
-
-    Route::get('/home',[viewController::class ,'viewPsikolog']);
-    Route::get('/kelolaMeditasi',[viewController::class, 'viewMeditasi']);
-    Route::get('/kelolaTesKepribadian', [viewController::class, 'viewTesKepribadian']);
-
-    Route::get('/profile', [profileController::class, 'viewProfile'])->name('viewProfile');
-    Route::put('/profile', [profileController::class, 'updateProfile'])->name('updateProfile');
-    Route::get('/riwayatKonseling', [viewController::class, 'viewRiwayatChat']);
-
     Route::resource('home', PsikologController::class);
     Route::get('/home/edit/{user}',[PsikologController::class ,'edit'])->name('psikolog.edit');
     Route::put('/home/update/{user}',[PsikologController::class ,'update'])->name('psikolog.update');
 
-    Route::get('/kelolaTesKepribadian', [viewController::class, 'viewTesKepribadian']);
+    Route::get('/TesKepribadian', [SoalKepribadianController::class, 'formUpload'])->name('form.upload');
+    Route::post('/TesKepribadian', [SoalKepribadianController::class, 'upload'])->name('upload.soal');
 
     // kelola meditasi
     Route::resource('kelolaMeditasiPsikolog', MeditasiController::class);
@@ -85,7 +81,6 @@ Route::middleware(['auth','user-access:psikolog'])->prefix('psikolog')->group(fu
 
     // riwayat konseling
     Route::get('/riwayatKonseling', [ChatController::class, 'index']);
-
     Route::get('/chat/{userId}', [viewController::class, 'viewChat'])->name('psikolog.chat');
 });
 
@@ -95,9 +90,13 @@ Route::middleware(['auth','user-access:admin'])->prefix('admin')->group(function
     Route::delete('/admin/delete/{id}', [Admin::class, 'deleteUser'])->name('admin.delete');
 
     Route::resource('kelolaPsikolog', PsikologController::class);
-    Route::resource('kelolaMeditasi', MeditasiController::class);
 
-    Route::get('/approveTes', [viewController::class, 'approveTes']);
+    Route::resource('kelolaMeditasi', MeditasiController::class);
+    Route::get('/kelolaMeditasi/edit/{meditasi}', [MeditasiController::class, 'edit'])->name('kelolaMeditasi.edit');
+    Route::put('/kelolaMeditasi/update/{meditasi}', [MeditasiController::class, 'update'])->name('kelolaMeditasi.update');
+
+    Route::put('/kelolaMeditasi/{id}/approve', [MeditasiController::class, 'approve'])->name('kelolaMeditasi.approve');
+
     // Register Admin
     Route::get('/registerAdmin', [loginController::class, 'showRegisterAdmin'])->name('registerAdmin');
     Route::post('/registerAdmin', [loginController::class, 'registerAdmin']);

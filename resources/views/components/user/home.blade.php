@@ -2,7 +2,7 @@
 @section('home')
 
 {{-- Home --}}
-<section class="flex flex-col lg:flex-row justify-between items-center bg-[#756AB6] px-4 lg:px-24 py-16 lg:py-20">
+<section class="flex flex-col lg:flex-row justify-between items-center bg-[#756AB6] px-4 lg:px-24 py-16 lg:py-20 min-h-screen w-full">
     <!-- Text Section -->
     <div class="lg:w-1/2 text-white text-center lg:text-left mb-10 lg:mb-0">
         <h1 class="text-4xl md:text-5xl font-extrabold mb-4">MentalCare</h1>
@@ -14,13 +14,13 @@
     </div>
     <!-- Image Section -->
     <div class="lg:w-1/2 flex justify-center lg:justify-end">
-        <img src="{{ asset('/img/icon_hero.svg') }}" alt="Icon Hero" class="w-72 md:w-96 lg:w-[481px] lg:h-[469px]" />
+        <img src="{{ asset('/img/icon_hero.svg') }}" alt="Icon Hero" class="w-72 md:w-96 lg:w-[481px] lg:h-[469px] max-w-full h-auto" />
     </div>
 </section>
 
 {{-- About --}}
-<section id="about" class="bg-white dark:bg-gray-900 px-4 md:px-10 lg:px-24 py-16">
-    <div class="flex flex-col-reverse lg:flex-row items-center gap-12">
+<section id="about" class="bg-white dark:bg-gray-900 px-4 md:px-10 lg:px-24 py-16 min-h-screen w-full flex items-center">
+    <div class="flex flex-col-reverse lg:flex-row items-center gap-12 w-full">
         <div class="lg:w-1/2 text-center lg:text-left">
             <h2 class="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white mb-6">Tentang Kami</h2>
             <p class="text-gray-700 dark:text-gray-300 text-justify">
@@ -49,7 +49,7 @@
         </div>
         <div class="lg:w-1/2 flex justify-center">
             <img src="{{ asset('/img/icon_about.png') }}" alt="Icon About"
-                class="w-48 md:w-64 lg:w-[481px] lg:h-[469px]" />
+                class="w-48 md:w-64 lg:w-[481px] lg:h-[469px] max-w-full h-auto" />
         </div>
     </div>
 </section>
@@ -58,7 +58,7 @@
 @auth
     @if(Auth::user()->role === 'user')
         {{-- Section untuk user --}}
-        <section id="konsul" class="flex justify-center items-center min-h-screen bg-[#756AB6] px-4 md:px-8">
+        <section id="konsul" class="flex justify-center items-center min-h-screen bg-[#756AB6] px-4 md:px-8 w-full">
             <div class="py-4 w-full max-w-5xl">
                 <div class="text-center mb-6">
                     <h1 class="text-2xl sm:text-3xl font-semibold text-white">Psikolog Terbaik</h1>
@@ -66,12 +66,12 @@
                 </div>
                 <div class="grid justify-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-black">
                     @foreach ($psikolog as $index => $item)
-                    <div class="card bg-base-100 rounded shadow-xl dark:text-white bg-gray-100 dark:bg-[#432E54] p-3 sm:p-4">
+                    <div class="card bg-base-100 rounded shadow-xl dark:text-white bg-gray-100 dark:bg-[#432E54] p-3 sm:p-4 h-full">
                         <figure class="px-4 pt-4">
                             <img
                                 src="{{ Storage::url($item->image) }}"
                                 alt="Psikolog Image"
-                                class="rounded-xl w-full object-cover" />
+                                class="rounded-xl w-full object-cover max-h-60" />
                         </figure>
                         <div class="card-body items-center text-center px-2">
                             <h2 class="card-title text-md sm:text-lg font-bold mt-2">{{ $item->name }}</h2>
@@ -93,51 +93,18 @@
         </section>
     @elseif(Auth::user()->role === 'psikolog')
         {{-- Section khusus untuk psikolog --}}
-        <section class="flex justify-center items-center min-h-screen bg-[#756AB6] px-4 md:px-8">
+        <section class="flex justify-center items-center min-h-screen bg-[#756AB6] px-4 md:px-8 w-full">
     <div class="w-full max-w-6xl py-10">
         <div class="text-center mb-8">
             <h1 class="text-3xl font-bold text-gray-800 dark:text-white">Selamat datang, {{ Auth::user()->name }}!</h1>
             <p class="mt-2 text-lg text-gray-600 dark:text-gray-300">Berikut adalah daftar user yang pernah berkonsultasi dengan Anda:</p>
         </div>
-
-        {{-- @if($konsultasis->isEmpty())
-            <div class="text-center text-gray-500 dark:text-gray-300">
-                <p>Belum ada riwayat konsultasi.</p>
-            </div> --}}
-        {{-- @else
-        <div class="overflow-x-auto">
-            <table class="min-w-full table-auto bg-white dark:bg-[#333] shadow-md rounded">
-                <thead>
-                    <tr class="bg-[#756AB6] text-white text-left">
-                        <th class="px-4 py-2">No</th>
-                        <th class="px-4 py-2">Nama User</th>
-                        <th class="px-4 py-2">Email</th>
-                        <th class="px-4 py-2">Tanggal Konsultasi</th>
-                        <th class="px-4 py-2">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($konsultasis as $index => $konsultasi)
-                    <tr class="border-b dark:border-gray-600">
-                        <td class="px-4 py-2">{{ $index + 1 }}</td>
-                        <td class="px-4 py-2">{{ $konsultasi->user->name }}</td>
-                        <td class="px-4 py-2">{{ $konsultasi->user->email }}</td>
-                        <td class="px-4 py-2">{{ $konsultasi->created_at->format('d M Y, H:i') }}</td>
-                        <td class="px-4 py-2">
-                            <a href="{{ url('psikolog/chat/'.$konsultasi->user->id) }}" class="text-blue-600 hover:underline">Lihat Chat</a>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-        @endif --}}
+        {{-- Table konsultasi bisa diatur height-nya jika ingin scroll --}}
     </div>
-</section>
     @endif
 @else
     {{-- Section untuk guest (belum login) --}}
-    <section id="konsul" class="flex justify-center items-center min-h-screen bg-[#756AB6] px-4 md:px-8">
+    <section id="konsul" class="flex justify-center items-center min-h-screen bg-[#756AB6] px-4 md:px-8 w-full">
         <div class="py-4 w-full max-w-5xl">
             <div class="text-center mb-6">
                 <h1 class="text-2xl sm:text-3xl font-semibold text-white">Psikolog Terbaik</h1>
@@ -145,12 +112,12 @@
             </div>
             <div class="grid justify-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-black">
                 @foreach ($psikolog as $index => $item)
-                <div class="card bg-base-100 rounded shadow-xl dark:text-white bg-gray-100 dark:bg-[#432E54] p-3 sm:p-4">
+                <div class="card bg-base-100 rounded shadow-xl dark:text-white bg-gray-100 dark:bg-[#432E54] p-3 sm:p-4 h-full">
                     <figure class="px-4 pt-4">
                         <img
                             src="{{ Storage::url($item->image) }}"
                             alt="Psikolog Image"
-                            class="rounded-xl w-full object-cover" />
+                            class="rounded-xl w-full object-cover max-h-60" />
                     </figure>
                     <div class="card-body items-center text-center px-2">
                         <h2 class="card-title text-md sm:text-lg font-bold mt-2">{{ $item->name }}</h2>
@@ -172,11 +139,9 @@
     </section>
 @endif
 
-
-
 {{-- User Review --}}
-<section id="reviews" class="min-h-screen py-12 px-4 bg-gray-100 dark:bg-gray-900">
-    <div class="max-w-4xl mx-auto">
+<section id="reviews" class="min-h-screen py-12 px-4 bg-gray-100 dark:bg-gray-900 w-full flex items-center">
+    <div class="max-w-4xl mx-auto w-full">
         <!-- Form for Submitting Reviews -->
         @if(Auth::check() && Auth::user()->role == 'user')
             <h2 class="text-3xl font-extrabold text-gray-800 dark:text-white text-center mb-8">
@@ -308,7 +273,7 @@
 
 <!-- Chat Window -->
 <div id="chat-window" class="hidden mt-2 w-80 h-[500px] bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden flex flex-col">
-    
+
     <!-- Header -->
     <div class="p-4 border-b bg-[#756AB6] text-white font-bold">MentalCare Bot</div>
 
@@ -431,9 +396,3 @@ function removeLoading() {
 
 
 @endsection
-
-</script>
-
-@endsection
-
-

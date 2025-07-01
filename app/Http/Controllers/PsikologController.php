@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Psikolog;
+use App\Models\Meditasi;
 use App\Models\User;
+use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -19,10 +21,22 @@ class PsikologController extends Controller
         // Cek apakah yang login adalah psikolog
         if (Auth::user()->role === 'psikolog') {
             $user = Auth::user(); // ambil data dari tabel users
+            $meditasi=Meditasi::count();
             $profile = $user->psikolog; // ambil data dari tabel psikologs melalui relasi
+            $psikologId = auth()->id();
+            $totalPasien = Message::where('from_user_id', '!=', $psikologId)
+                ->where('to_user_id', $psikologId)
+                ->pluck('from_user_id')
+                ->merge(
+                    Message::where('to_user_id', '!=', $psikologId)
+                        ->where('from_user_id', $psikologId)
+                        ->pluck('to_user_id')
+                )
+                ->unique()
+                ->count();
 
             // tampilkan dashboard khusus psikolog
-            return view('components.psikolog.profile.dashboardPsikolog', compact('user', 'profile'));
+            return view('components.psikolog.profile.dashboardPsikolog', compact('user', 'profile', 'meditasi', 'totalPasien'));
         }
 
         // Jika yang login adalah admin

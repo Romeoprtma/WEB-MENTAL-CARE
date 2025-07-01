@@ -23,7 +23,7 @@
                         </div>
                         <div class="ml-4">
                             <p class="text-sm font-medium text-gray-500">Total Pasien</p>
-                            <p class="text-2xl font-semibold text-gray-900">127</p>
+                            <p class="text-2xl font-semibold text-gray-900">{{ $totalPasien }}</p>
                         </div>
                     </div>
                 </div>
@@ -39,7 +39,7 @@
                         </div>
                         <div class="ml-4">
                             <p class="text-sm font-medium text-gray-500">Sesi Hari Ini</p>
-                            <p class="text-2xl font-semibold text-gray-900">8</p>
+                            <p class="text-2xl font-semibold text-gray-900"></p>
                         </div>
                     </div>
                 </div>
@@ -55,7 +55,7 @@
                         </div>
                         <div class="ml-4">
                             <p class="text-sm font-medium text-gray-500">Meditasi Aktif</p>
-                            <p class="text-2xl font-semibold text-gray-900">15</p>
+                            <p class="text-2xl font-semibold text-gray-900">{{$meditasi}}</p>
                         </div>
                     </div>
                 </div>

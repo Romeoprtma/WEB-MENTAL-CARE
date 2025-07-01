@@ -18,11 +18,25 @@
 <section class="mt-11">
     <h1 class="text-[32px] font-bold text-center mb-11">INSTRUKSI PENGISIAN SOAL</h1>
     <p class="text-lg  text-[#5d519f] font-bold text-justify px-[200px]">Di bawah ini ada 60 nomor. Masing-masing nomor memiliki dua pernyataan yang bertolak belakang (PERNYATAAN A & B). Pilihlah salah satu pernyataan yang paling sesuai dengan diri Anda dengan mengetik angka "1" pada kolom yang sudah disediakan (KOLOM ISIAN). Anda HARUS memilih salah satu yang dominan serta mengisi semua nomor. Lebih jelasnya lihat Contoh di Sheet 2.</p>
-    <form id="dataForm" class="text-center">
+    <form action="{{route('tes.submit')}}" class="text-center">
+         @csrf
         <div id="questionContainer" class="mb-5">
-            <!-- Input fields will be dynamically generated here -->
+            @foreach ($soals as $soal)
+            <div style="margin-bottom: 20px;">
+                <p><strong>{{ $soal->nomor }}.</strong>
+                    <label>
+                        <input type="radio" name="jawaban[{{ $soal->nomor }}]" value="A" required>
+                        {{ $soal->pernyataan_a }}
+                    </label><br>
+                    <label>
+                        <input type="radio" name="jawaban[{{ $soal->nomor }}]" value="B">
+                        {{ $soal->pernyataan_b }}
+                    </label>
+                </p>
+            </div>
+        @endforeach
         </div>
-        <button type="button" id="submitButton" class="bg-[#756AB6] text-white px-6 py-3 rounded-lg hover:bg-[#5d519f]">
+        <button type="submit" id="submitButton" class="bg-[#756AB6] text-white px-6 py-3 rounded-lg hover:bg-[#5d519f]">
             Kirim Data
         </button>
     </form>
@@ -35,7 +49,7 @@
 
 
     {{-- MBTI Test Results --}}
-<section id="testResults" class="mt-11 hidden">
+{{-- <section id="testResults" class="mt-11 hidden">
     <h1 class="text-[32px] font-bold text-center">Hasil Tes</h1>
     <div class="text-center flex justify-center items-center flex-wrap gap-6">
         <!-- Introvert Card -->
@@ -86,10 +100,10 @@
             <p class="text-2xl font-bold text-[#756AB6]">{{ $optionB4 }}</p>
         </div>
     </div>
-</section>
+</section> --}}
 
 {{-- Kesimpulan --}}
-<section id="testConclusion" class="mt-11 hidden">
+{{-- <section id="testConclusion" class="mt-11 hidden">
     <h1 class="text-[32px] font-bold text-center">KEPRIBADIAN ANDA</h1>
     <div class="text-center flex justify-center items-center flex-wrap gap-6">
         <!-- Introvert Card -->
@@ -125,9 +139,9 @@
         </button>
     </a>
 </div>
-</section>
+</section> --}}
 
-<script>
+{{-- <script>
     const questionContainer = document.getElementById("questionContainer");
     const submitButton = document.getElementById("submitButton");
     const totalQuestions = 60;
@@ -221,5 +235,5 @@
             submitButton.disabled = false; // Enable button after request completes
         });
     });
-</script>
+</script> --}}
 @endsection
