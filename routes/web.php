@@ -16,6 +16,7 @@ use App\Livewire\Chat;
 use App\Livewire\UserChart;
 use Illuminate\Support\Facades\Route;
 
+
 Route::get('/',[viewController::class ,'viewHome']);
 
 Route::get('/listPsikolog',[viewController::class, 'viewListPsikolog']);
@@ -108,5 +109,8 @@ Route::middleware(['auth','user-access:admin'])->prefix('admin')->group(function
 Route::post('/chatbot', [ChatbotController::class, 'handle']);
 
 
+
 Route::get('/meditasi', [MeditasiController::class, 'meditasi']);
 
+Route::get('/admin/approveTes', [SoalKepribadianController::class, 'showApprovalPage']);
+Route::post('/admin/approveTes/store', [SoalKepribadianController::class, 'approveTes'])->name('admin.approveTes.store');

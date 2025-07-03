@@ -1,239 +1,78 @@
 @extends('layouts.main')
+
 @section('tesKepribadian')
-    {{-- Hero --}}
-    <section class="flex justify-center items-center bg-[#756AB6] min-h-screen">
-        <div class="title-hero text-white">
-            <h1 class="text-[42px] font-bold">Tes Kepribadian</h1>
-            <h3 class=" py-2 max-w-[500px] mr-[54px]">Temukan potensi diri Anda dengan tes kepribadian
-                yang mendalam dan akurat. Dengan hasil yang mudah dipahami, Anda bisa mengeksplorasi
-                kekuatan dan tantangan pribadi, serta mendapatkan wawasan yang berguna untuk pengembangan
-                diri dan hubungan sosial.</h3>
+    {{-- Hero Section --}}
+    <section class="flex flex-col md:flex-row justify-center items-center bg-[#756AB6] min-h-screen px-6 py-10 text-white">
+        <div class="text-center md:text-left md:mr-10 mb-8 md:mb-0">
+            <h1 class="text-4xl lg:text-5xl font-bold">Tes Kepribadian</h1>
+            <p class="py-2 mt-2 max-w-lg text-lg leading-relaxed">
+                Temukan potensi diri Anda dengan tes yang mendalam dan akurat untuk mendapatkan wawasan berguna bagi pengembangan diri.
+            </p>
         </div>
-        <div class="img-hero flex justify-center lg:justify-end w-full lg:w-auto">
-            <img src="{{asset('/img/tesKepribadian.png')}}" width="350px" height="350px" alt="">
+        <div class="flex-shrink-0">
+            <img src="{{ asset('/img/tesKepribadian.png') }}" width="350px" height="350px" alt="Ilustrasi Tes Kepribadian">
         </div>
     </section>
 
-    {{-- SOAL TES --}}
-<section class="mt-11">
-    <h1 class="text-[32px] font-bold text-center mb-11">INSTRUKSI PENGISIAN SOAL</h1>
-    <p class="text-lg  text-[#5d519f] font-bold text-justify px-[200px]">Di bawah ini ada 60 nomor. Masing-masing nomor memiliki dua pernyataan yang bertolak belakang (PERNYATAAN A & B). Pilihlah salah satu pernyataan yang paling sesuai dengan diri Anda dengan mengetik angka "1" pada kolom yang sudah disediakan (KOLOM ISIAN). Anda HARUS memilih salah satu yang dominan serta mengisi semua nomor. Lebih jelasnya lihat Contoh di Sheet 2.</p>
-    <form action="{{route('tes.submit')}}" class="text-center">
-         @csrf
-        <div id="questionContainer" class="mb-5">
-            @foreach ($soals as $soal)
-            <div style="margin-bottom: 20px;">
-                <p><strong>{{ $soal->nomor }}.</strong>
-                    <label>
-                        <input type="radio" name="jawaban[{{ $soal->nomor }}]" value="A" required>
-                        {{ $soal->pernyataan_a }}
-                    </label><br>
-                    <label>
-                        <input type="radio" name="jawaban[{{ $soal->nomor }}]" value="B">
-                        {{ $soal->pernyataan_b }}
-                    </label>
-                </p>
-            </div>
-        @endforeach
+{{-- SOAL TES --}}
+<section class="bg-gray-50 py-16 px-4">
+    <div class="max-w-4xl mx-auto">
+        <div class="text-center mb-12">
+            <h1 class="text-3xl font-bold text-gray-800">INSTRUKSI PENGISIAN SOAL</h1>
+            <p class="text-base text-gray-600 mt-2 max-w-3xl mx-auto">
+                Di bawah ini ada 60 nomor. Pilihlah **satu** dari dua pernyataan di setiap nomor yang paling sesuai dengan diri Anda. Anda **HARUS** mengisi semua nomor untuk melihat hasil.
+            </p>
         </div>
-        <button type="submit" id="submitButton" class="bg-[#756AB6] text-white px-6 py-3 rounded-lg hover:bg-[#5d519f]">
-            Kirim Data
-        </button>
-    </form>
-</section>
-
-{{-- <div id="loadingScreen">
-    <div class="loader"></div>
-</div> --}}
-{{-- END SOAL TES --}}
-
-
-    {{-- MBTI Test Results --}}
-{{-- <section id="testResults" class="mt-11 hidden">
-    <h1 class="text-[32px] font-bold text-center">Hasil Tes</h1>
-    <div class="text-center flex justify-center items-center flex-wrap gap-6">
-        <!-- Introvert Card -->
-        <div class="w-1/4 p-6 bg-white rounded-lg shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-2xl">
-            <h1 class="text-xl font-semibold text-[#4A4A4A]">Introvert</h1>
-            <p class="text-2xl font-bold text-[#756AB6]">{{ $optionA1 }}</p>
-        </div>
-
-        <!-- Ekstrovert Card -->
-        <div class="w-1/4 p-6 bg-white rounded-lg shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-2xl">
-            <h1 class="text-xl font-semibold text-[#4A4A4A]">Ekstrovert</h1>
-            <p class="text-2xl font-bold text-[#756AB6]">{{ $optionB1 }}</p>
-        </div>
-
-        <!-- Sensing Card -->
-        <div class="w-1/4 p-6 bg-white rounded-lg shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-2xl">
-            <h1 class="text-xl font-semibold text-[#4A4A4A]">Sensing</h1>
-            <p class="text-2xl font-bold text-[#756AB6]">{{ $optionA2 }}</p>
-        </div>
-
-        <!-- Intuition Card -->
-        <div class="w-1/4 p-6 bg-white rounded-lg shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-2xl">
-            <h1 class="text-xl font-semibold text-[#4A4A4A]">Intuition</h1>
-            <p class="text-2xl font-bold text-[#756AB6]">{{ $optionB2 }}</p>
-        </div>
-
-        <!-- Thinking Card -->
-        <div class="w-1/4 p-6 bg-white rounded-lg shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-2xl">
-            <h1 class="text-xl font-semibold text-[#4A4A4A]">Thinking</h1>
-            <p class="text-2xl font-bold text-[#756AB6]">{{ $optionA3 }}</p>
-        </div>
-
-        <!-- Feeling Card -->
-        <div class="w-1/4 p-6 bg-white rounded-lg shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-2xl">
-            <h1 class="text-xl font-semibold text-[#4A4A4A]">Feeling</h1>
-            <p class="text-2xl font-bold text-[#756AB6]">{{ $optionB3 }}</p>
-        </div>
-
-        <!-- Judging Card -->
-        <div class="w-1/4 p-6 bg-white rounded-lg shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-2xl">
-            <h1 class="text-xl font-semibold text-[#4A4A4A]">Judging</h1>
-            <p class="text-2xl font-bold text-[#756AB6]">{{ $optionA4 }}</p>
-        </div>
-
-        <!-- Perceiving Card -->
-        <div class="w-1/4 p-6 bg-white rounded-lg shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-2xl">
-            <h1 class="text-xl font-semibold text-[#4A4A4A]">Perceiving</h1>
-            <p class="text-2xl font-bold text-[#756AB6]">{{ $optionB4 }}</p>
-        </div>
-    </div>
-</section> --}}
-
-{{-- Kesimpulan --}}
-{{-- <section id="testConclusion" class="mt-11 hidden">
-    <h1 class="text-[32px] font-bold text-center">KEPRIBADIAN ANDA</h1>
-    <div class="text-center flex justify-center items-center flex-wrap gap-6">
-        <!-- Introvert Card -->
-        <div class="w-1/4 p-6 bg-white rounded-lg shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-2xl">
-            <h1 class="text-xl font-semibold text-[#4A4A4A]">{{ $string1 }}</h1>
-            <p class="text-2xl font-bold text-[#756AB6]">{{ $choice1 }}</p>
-        </div>
-
-        <!-- Ekstrovert Card -->
-        <div class="w-1/4 p-6 bg-white rounded-lg shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-2xl">
-            <h1 class="text-xl font-semibold text-[#4A4A4A]">{{ $string2 }}</h1>
-            <p class="text-2xl font-bold text-[#756AB6]">{{ $choice2 }}</p>
-        </div>
-
-        <!-- Sensing Card -->
-        <div class="w-1/4 p-6 bg-white rounded-lg shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-2xl">
-            <h1 class="text-xl font-semibold text-[#4A4A4A]">{{ $string3 }}</h1>
-            <p class="text-2xl font-bold text-[#756AB6]">{{ $choice3 }}</p>
-        </div>
-
-        <!-- Intuition Card -->
-        <div class="w-1/4 p-6 bg-white rounded-lg shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-2xl">
-            <h1 class="text-xl font-semibold text-[#4A4A4A]">{{ $string4 }}</h1>
-            <p class="text-2xl font-bold text-[#756AB6]">{{ $choice4 }}</p>
-        </div>
-    </div>
-
-    <div class="flex justify-center items-center">
-
-    <a href="{{ url('printTes') }}" class=" cursor-pointer" >
-        <button type="submit" class="bg-[#756AB6] mt-8 text-white px-6 py-3 rounded-lg hover:bg-[#5d519f]">
-            Download Hasil Test
-        </button>
-    </a>
-</div>
-</section> --}}
-
-{{-- <script>
-    const questionContainer = document.getElementById("questionContainer");
-    const submitButton = document.getElementById("submitButton");
-    const totalQuestions = 60;
-
-    // URL Apps Script
-    const scriptURL = "https://script.google.com/macros/s/AKfycby7E2Bu38cf97borPc6Yw5hHDHu1cj1Bg2aswBQFAp7cGTrWZ-x3HkxmIBasDBk_SU/exec";
-
-    // Ambil data dari Apps Script
-    fetch(scriptURL)
-        .then(response => response.json())
-        .then(data => {
-            if (data.questions) {
-                // Iterasi data questions dari Apps Script
-                data.questions.forEach((item, index) => {
-                    const questionDiv = document.createElement("div");
-                    questionDiv.className = "mb-3 text-left";
-
-                    questionDiv.innerHTML = `
-                        <p class="mt-11 text-[25px] text-opacity-70 text-[#5d519f] font-bold text-center mb-4">A. ${item.questionA}</p>
-                        <p class="text-[25px] text-opacity-70 text-[#5d519f] font-bold text-center mb-4">B. ${item.questionB}</p>
-                        <div class="flex justify-center gap-8">
-                            <!-- Opsi A -->
-                            <label class="flex flex-col items-center gap-2 cursor-pointer group">
-                                <input
-                                    type="radio"
-                                    name="answers[${index}]"
-                                    value="A"
-                                    class="hidden peer"
-                                >
-                                <div class="w-8 h-8 flex justify-center items-center border-2 border-[#5d519f] rounded-full group-hover:border-[#3b2a88] transition-all peer-checked:bg-[#5d519f] peer-checked:border-[#5d519f]">
-                                    <span class="block w-4 h-4 rounded-full bg-white scale-0 peer-checked:scale-100 transition-all"></span>
-                                </div>
-                                <span class="text-[#5d519f] text-lg font-semibold group-hover:text-[#3b2a88] transition-all">Pilihan A</span>
+        
+        <form action="{{ route('tes.submit') }}" method="POST">
+            @csrf
+            <div id="questionContainer" class="space-y-8">
+                
+                @forelse ($soals as $soal)
+                    <div class="question-card bg-white p-5 sm:p-6 rounded-xl shadow-md border border-gray-200">
+                        <p class="text-lg font-semibold text-gray-900 mb-5">
+                            {{-- PERBAIKAN 1: Menggunakan nomor urut dari loop ($loop->iteration) agar pasti benar dan urut --}}
+                            {{ $loop->iteration }}. Mana yang lebih menggambarkan diri Anda?
+                        </p>
+                        
+                        <div class="space-y-4">
+                            {{-- Opsi A --}}
+                            <label class="flex items-center p-4 border-2 border-gray-300 rounded-lg cursor-pointer group transition-all duration-200 hover:border-[#756AB6] has-[:checked]:border-[#756AB6] has-[:checked]:bg-[#756AB6] has-[:checked]:shadow-lg">
+                                {{-- 
+                                    PERBAIKAN 2 (Paling Penting): Menggunakan ID unik dari soal untuk 'name'.
+                                    Ini adalah kunci untuk memperbaiki error Anda.
+                                --}}
+                                <input type="radio" name="jawaban[{{ $soal->id }}]" value="A" class="hidden" required>
+                                <span class="text-base font-medium text-gray-700 group-has-[:checked]:text-white">
+                                    {{ $soal->pernyataan_a }}
+                                </span>
                             </label>
-
-                            <!-- Opsi B -->
-                            <label class="flex flex-col items-center gap-2 cursor-pointer group">
-                                <input
-                                    type="radio"
-                                    name="answers[${index}]"
-                                    value="B"
-                                    class="hidden peer"
-                                >
-                                <div class="w-8 h-8 flex justify-center items-center border-2 border-[#5d519f] rounded-full group-hover:border-[#3b2a88] transition-all peer-checked:bg-[#5d519f] peer-checked:border-[#5d519f]">
-                                    <span class="block w-4 h-4 rounded-full bg-white scale-0 peer-checked:scale-100 transition-all"></span>
-                                </div>
-                                <span class="text-[#5d519f] text-lg font-semibold group-hover:text-[#3b2a88] transition-all">Pilihan B</span>
+                            
+                            {{-- Opsi B --}}
+                            <label class="flex items-center p-4 border-2 border-gray-300 rounded-lg cursor-pointer group transition-all duration-200 hover:border-[#756AB6] has-[:checked]:border-[#756AB6] has-[:checked]:bg-[#756AB6] has-[:checked]:shadow-lg">
+                                {{-- 'name' di sini juga menggunakan ID unik soal yang sama dengan Opsi A --}}
+                                <input type="radio" name="jawaban[{{ $soal->id }}]" value="B" class="hidden" required>
+                                <span class="text-base font-medium text-gray-700 group-has-[:checked]:text-white">
+                                    {{ $soal->pernyataan_b }}
+                                </span>
                             </label>
                         </div>
-                    `;
+                    </div>
+                @empty
+                    <div class="text-center py-10 px-6 bg-white rounded-lg shadow-md">
+                        <p class="text-gray-600 text-lg">Soal tes tidak tersedia saat ini.</p>
+                    </div>
+                @endforelse
+            </div>
 
-                    questionContainer.appendChild(questionDiv);
-                });
-            } else {
-                alert("Tidak ada data pertanyaan yang tersedia.");
-            }
-        })
-        .catch(error => {
-            console.error("Error fetching data:", error);
-            alert("Gagal mengambil data pertanyaan. Silakan coba lagi.");
-        })
-        .finally(() => {
-            hideLoader();
-        });
-
-    // Submit data to Laravel
-    submitButton.addEventListener("click", function () {
-        showLoader();
-        submitButton.disabled = true; // Disable button to prevent multiple clicks
-
-        const formData = new FormData(document.getElementById("dataForm"));
-
-        fetch("{{ route('submit.answers') }}", {
-            method: "POST",
-            headers: {
-                "X-CSRF-TOKEN": "{{ csrf_token() }}",
-            },
-            body: formData,
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.message) {
-                alert(data.message);
-            document.getElementById('testResults').classList.remove('hidden');
-                document.getElementById('testConclusion').classList.remove('hidden');
-            }
-        })
-        .catch(error => alert("Error: " + error.message))
-        .finally(() => {
-            hideLoader();
-            submitButton.disabled = false; // Enable button after request completes
-        });
-    });
-</script> --}}
+            @if($soals->isNotEmpty())
+                <div class="text-center mt-12">
+                    <button type="submit" id="submitButton" class="bg-[#756AB6] text-white px-10 py-3 rounded-lg text-lg font-semibold hover:bg-[#5d519f] transition-colors duration-300">
+                        Kirim Jawaban & Lihat Hasil
+                    </button>
+                </div>
+            @endif
+        </form>
+    </div>
+</section>
 @endsection
