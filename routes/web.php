@@ -108,8 +108,6 @@ Route::middleware(['auth','user-access:admin'])->prefix('admin')->group(function
 //chatbot
 Route::post('/chatbot', [ChatbotController::class, 'handle']);
 
-
-
 Route::get('/meditasi', [MeditasiController::class, 'meditasi']);
 
 Route::get('/admin/approveTes', [SoalKepribadianController::class, 'showApprovalPage']);
